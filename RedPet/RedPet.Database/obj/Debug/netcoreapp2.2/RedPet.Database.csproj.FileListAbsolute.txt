@@ -1,0 +1,9 @@
+C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Database\bin\Debug\netcoreapp2.2\RedPet.Database.deps.json
+C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Database\bin\Debug\netcoreapp2.2\RedPet.Database.dll
+C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Database\bin\Debug\netcoreapp2.2\RedPet.Database.pdb
+C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Database\obj\Debug\netcoreapp2.2\RedPet.Database.csprojAssemblyReference.cache
+C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Database\obj\Debug\netcoreapp2.2\RedPet.Database.csproj.CoreCompileInputs.cache
+C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Database\obj\Debug\netcoreapp2.2\RedPet.Database.AssemblyInfoInputs.cache
+C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Database\obj\Debug\netcoreapp2.2\RedPet.Database.AssemblyInfo.cs
+C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Database\obj\Debug\netcoreapp2.2\RedPet.Database.dll
+C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Database\obj\Debug\netcoreapp2.2\RedPet.Database.pdb

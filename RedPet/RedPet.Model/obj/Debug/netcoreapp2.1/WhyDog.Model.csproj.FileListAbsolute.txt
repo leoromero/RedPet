@@ -1,0 +1,9 @@
+C:\Users\romer\source\repos\WhyDogAPI\WhyDog\WhyDog.Model\bin\Debug\netcoreapp2.1\WhyDog.Model.deps.json
+C:\Users\romer\source\repos\WhyDogAPI\WhyDog\WhyDog.Model\bin\Debug\netcoreapp2.1\WhyDog.Model.dll
+C:\Users\romer\source\repos\WhyDogAPI\WhyDog\WhyDog.Model\bin\Debug\netcoreapp2.1\WhyDog.Model.pdb
+C:\Users\romer\source\repos\WhyDogAPI\WhyDog\WhyDog.Model\obj\Debug\netcoreapp2.1\WhyDog.Model.csprojAssemblyReference.cache
+C:\Users\romer\source\repos\WhyDogAPI\WhyDog\WhyDog.Model\obj\Debug\netcoreapp2.1\WhyDog.Model.csproj.CoreCompileInputs.cache
+C:\Users\romer\source\repos\WhyDogAPI\WhyDog\WhyDog.Model\obj\Debug\netcoreapp2.1\WhyDog.Model.AssemblyInfoInputs.cache
+C:\Users\romer\source\repos\WhyDogAPI\WhyDog\WhyDog.Model\obj\Debug\netcoreapp2.1\WhyDog.Model.AssemblyInfo.cs
+C:\Users\romer\source\repos\WhyDogAPI\WhyDog\WhyDog.Model\obj\Debug\netcoreapp2.1\WhyDog.Model.dll
+C:\Users\romer\source\repos\WhyDogAPI\WhyDog\WhyDog.Model\obj\Debug\netcoreapp2.1\WhyDog.Model.pdb

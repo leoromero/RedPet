@@ -1,0 +1,4 @@
+C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Core\obj\Debug\netcoreapp2.2\RedPet.Core.csprojAssemblyReference.cache
+C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Core\obj\Debug\netcoreapp2.2\RedPet.Core.csproj.CoreCompileInputs.cache
+C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Core\obj\Debug\netcoreapp2.2\RedPet.Core.AssemblyInfoInputs.cache
+C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Core\obj\Debug\netcoreapp2.2\RedPet.Core.AssemblyInfo.cs

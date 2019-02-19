@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedPet.API", "RedPet.API\RedPet.API.csproj", "{B09DDA84-39F6-4C11-B707-761CD0DF57B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedPet.Database", "RedPet\RedPet.Database\RedPet.Database.csproj", "{CFC17C7B-7CC3-4D3C-A827-0BF201C850FF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedPet.Core", "RedPet\RedPet.Core\RedPet.Core.csproj", "{81EA2014-9EC7-4192-B7CE-445D639361CF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedPet.Model", "RedPet\RedPet.Model\RedPet.Model.csproj", "{D4EC9921-2756-43E5-B10A-96B6381F7410}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B09DDA84-39F6-4C11-B707-761CD0DF57B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B09DDA84-39F6-4C11-B707-761CD0DF57B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B09DDA84-39F6-4C11-B707-761CD0DF57B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B09DDA84-39F6-4C11-B707-761CD0DF57B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFC17C7B-7CC3-4D3C-A827-0BF201C850FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFC17C7B-7CC3-4D3C-A827-0BF201C850FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFC17C7B-7CC3-4D3C-A827-0BF201C850FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFC17C7B-7CC3-4D3C-A827-0BF201C850FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81EA2014-9EC7-4192-B7CE-445D639361CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81EA2014-9EC7-4192-B7CE-445D639361CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81EA2014-9EC7-4192-B7CE-445D639361CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81EA2014-9EC7-4192-B7CE-445D639361CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4EC9921-2756-43E5-B10A-96B6381F7410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4EC9921-2756-43E5-B10A-96B6381F7410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4EC9921-2756-43E5-B10A-96B6381F7410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4EC9921-2756-43E5-B10A-96B6381F7410}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {566A50B1-E134-44FE-86A9-60DF287ADAD2}
+	EndGlobalSection
+EndGlobal
