@@ -32,8 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RedPet\RedPet.Core\RedPet.Core.csproj" />
-    <ProjectReference Include="..\RedPet\RedPet.Database\RedPet.Database.csproj" />
+    <ProjectReference Include="..\RedPet.Core\RedPet.Core.csproj" />
+    <ProjectReference Include="..\RedPet.Database\RedPet.Database.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using RedPet.Database;
@@ -46,7 +45,7 @@ namespace RedPet.Core.Base
         public virtual async Task DeleteAsync(long id)
         {
             var entity = await Repository.GetAsync(id);
-            entity.DeletedDate = DateTime.Now;
+            entity.InactivationDate = DateTime.Now;
             await UnitOfWork.Complete();
         }
 

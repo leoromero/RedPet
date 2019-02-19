@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedPet.API", "RedPet.API\RedPet.API.csproj", "{B09DDA84-39F6-4C11-B707-761CD0DF57B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedPet.API", "RedPet\RedPet.API\RedPet.API.csproj", "{B09DDA84-39F6-4C11-B707-761CD0DF57B8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedPet.Database", "RedPet\RedPet.Database\RedPet.Database.csproj", "{CFC17C7B-7CC3-4D3C-A827-0BF201C850FF}"
 EndProject
