@@ -1,9 +1,0 @@
-C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Model\bin\Debug\netcoreapp2.2\RedPet.Model.deps.json
-C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Model\bin\Debug\netcoreapp2.2\RedPet.Model.dll
-C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Model\bin\Debug\netcoreapp2.2\RedPet.Model.pdb
-C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Model\obj\Debug\netcoreapp2.2\RedPet.Model.csprojAssemblyReference.cache
-C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Model\obj\Debug\netcoreapp2.2\RedPet.Model.csproj.CoreCompileInputs.cache
-C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Model\obj\Debug\netcoreapp2.2\RedPet.Model.AssemblyInfoInputs.cache
-C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Model\obj\Debug\netcoreapp2.2\RedPet.Model.AssemblyInfo.cs
-C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Model\obj\Debug\netcoreapp2.2\RedPet.Model.dll
-C:\Users\romer\source\repos\RedPet\RedPet\RedPet.Model\obj\Debug\netcoreapp2.2\RedPet.Model.pdb
