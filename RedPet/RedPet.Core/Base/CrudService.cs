@@ -5,12 +5,12 @@ using AutoMapper;
 using RedPet.Database;
 using RedPet.Database.Entities;
 using RedPet.Database.Repositories;
-using RedPet.Model.Base;
+using RedPet.Common.Models.Base;
 
 namespace RedPet.Core.Base
 {
     public abstract class CrudService<T, TViewModel, TCreateModel, TUpdateModel> : BaseService, ICrudService<T, TViewModel, TCreateModel, TUpdateModel>
-        where T : BaseEntity
+        where T : class, IBaseEntity
         where TViewModel : IViewModel
         where TCreateModel : ICreateModel
         where TUpdateModel : IUpdateModel
@@ -22,34 +22,40 @@ namespace RedPet.Core.Base
         {
             Repository = repository;
         }
-        public virtual async Task<IEnumerable<TViewModel>> GetAsync()
+        public virtual async Task<EntityResult<IEnumerable<TViewModel>>> GetAsync()
         {
-            var result = await Repository.GetAsync();
-            return Mapper.Map<IEnumerable<TViewModel>>(result);
+            var result = new EntityResult<IEnumerable<TViewModel>>();
+            var entities = await Repository.GetAsync();
+            result.Entity = Mapper.Map<IEnumerable<TViewModel>>(entities);
+            return result;
         }
 
-        public virtual async Task<TViewModel> GetAsync(long id)
+        public virtual async Task<EntityResult<TViewModel>> GetAsync(int id)
         {
-            var result = await Repository.GetAsync(id);
-            return Mapper.Map<TViewModel>(result);
+            var result = new EntityResult<TViewModel>();
+            var entity = await Repository.GetAsync(id);
+            result.Entity = Mapper.Map<TViewModel>(entity);
+            return result;
         }
 
-        public virtual async Task<long> CreateAsync(TCreateModel model)
+        public virtual async Task<EntityResult<int>> CreateAsync(TCreateModel model)
         {
+            var result = new EntityResult<int>();
             var entity = Mapper.Map<T>(model);
             Repository.Create(entity);
             await UnitOfWork.Complete();
-            return entity.Id;
+            result.Entity = entity.Id;
+            return result;
         }
 
-        public virtual async Task DeleteAsync(long id)
+        public virtual async Task DeleteAsync(int id)
         {
             var entity = await Repository.GetAsync(id);
             entity.InactivationDate = DateTime.Now;
             await UnitOfWork.Complete();
         }
 
-        public virtual async Task UpdateAsync(long id, TUpdateModel model)
+        public virtual async Task UpdateAsync(int id, TUpdateModel model)
         {
             var entity = await Repository.GetAsync(id);
 
@@ -61,10 +67,10 @@ namespace RedPet.Core.Base
 
     public interface ICrudService<T, TViewModel, in TCreateModel, in TUpdateModel>
     {
-        Task<IEnumerable<TViewModel>> GetAsync();
-        Task<TViewModel> GetAsync(long id);
-        Task<long> CreateAsync(TCreateModel model);
-        Task UpdateAsync(long id, TUpdateModel model);
-        Task DeleteAsync(long id);
+        Task<EntityResult<IEnumerable<TViewModel>>> GetAsync();
+        Task<EntityResult<TViewModel>> GetAsync(int id);
+        Task<EntityResult<int>> CreateAsync(TCreateModel model);
+        Task UpdateAsync(int id, TUpdateModel model);
+        Task DeleteAsync(int id);
     }
 }

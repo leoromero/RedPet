@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedPet.Database", "RedPet\R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedPet.Core", "RedPet\RedPet.Core\RedPet.Core.csproj", "{81EA2014-9EC7-4192-B7CE-445D639361CF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedPet.Model", "RedPet\RedPet.Model\RedPet.Model.csproj", "{D4EC9921-2756-43E5-B10A-96B6381F7410}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedPet.Common", "RedPet\RedPet.Common\RedPet.Common.csproj", "{D4EC9921-2756-43E5-B10A-96B6381F7410}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

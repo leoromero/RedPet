@@ -3,7 +3,7 @@ using RedPet.Core.Base;
 using RedPet.Database;
 using RedPet.Database.Entities;
 using RedPet.Database.Repositories;
-using RedPet.Model.Product;
+using RedPet.Common.Models.Product;
 
 namespace RedPet.Core
 {

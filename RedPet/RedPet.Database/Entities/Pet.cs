@@ -20,6 +20,6 @@ namespace RedPet.Database.Entities
         public virtual PetSize PetSize { get; set; }
         public virtual HairType HairType { get; set; }
         public virtual WeightRange WeightRange { get; set; }
-        public virtual User Owner { get; set; }
+        public virtual Customer Owner { get; set; }
     }
 }

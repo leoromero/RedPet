@@ -6,10 +6,12 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using RedPet.Database.Entities;
 using RedPet.Database.EntityTypeConfigurations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using RedPet.Database.Entities.Identity;
 
 namespace RedPet.Database
 {
-    public class RedPetContext : DbContext
+    public class RedPetContext : IdentityDbContext<User>
     {
         public RedPetContext(DbContextOptions<RedPetContext> options)
             : base(options)
@@ -29,7 +31,7 @@ namespace RedPet.Database
         public DbSet<HairType> HairTypes { get; set; }
         public DbSet<Breed> Breeds { get; set; }
         public DbSet<Booking> Bookings { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

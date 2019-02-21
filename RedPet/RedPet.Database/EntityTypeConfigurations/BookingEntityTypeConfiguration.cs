@@ -11,7 +11,7 @@ namespace RedPet.Database.EntityTypeConfigurations
             builder.HasOne(x => x.Product).WithMany();
             builder.HasOne(x => x.Promotion).WithMany();
             builder.HasOne(x => x.Service).WithMany();
-            builder.HasOne(x => x.User).WithMany();
+            builder.HasOne(x => x.Customer).WithMany();
         }
     }
 }

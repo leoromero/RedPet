@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using RedPet.Common.Models.Pet;
 using RedPet.Core.Base;
 using RedPet.Database;
 using RedPet.Database.Entities;
 using RedPet.Database.Repositories;
-using RedPet.Model.Pet;
 
 namespace RedPet.Core
 {

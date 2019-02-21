@@ -21,12 +21,22 @@ using RedPet.Core;
 using RedPet.Database;
 using RedPet.Database.Repositories;
 using RedPet.Core.Base;
+using RedPet.Database.Entities;
+using Microsoft.AspNetCore.Identity;
+using RedPet.Database.Entities.Identity;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using RedPet.Core.Auth;
+using RedPet.Common.Auth.Models;
 
 namespace RedPetAPI
 {
     public class Startup
     {
-        private readonly List<string> _versions = new List<string> { "1" };
+        private readonly List<string> versions = new List<string> { "1" };
+        private const string SecretKey = "iNivDmHLpUA223sqsfhqGbMRdRj1PVkH"; // todo: get this from somewhere secure
+        private readonly SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
 
         public Startup(IConfiguration configuration)
         {
@@ -51,6 +61,49 @@ namespace RedPetAPI
             var connectionString = Configuration.GetConnectionString("RedPet");
             services.AddDbContext<RedPetContext>(o =>
                 o.UseSqlServer(connectionString, x => x.MigrationsAssembly("RedPet.Database.Migrations")));
+
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<RedPetContext>();
+            
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            
+            services.Configure<JwtIssuerOptions>(options =>
+            {
+                options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+                options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+            });
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+
+                ValidateAudience = true,
+                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+
+                RequireExpirationTime = false,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(configureOptions =>
+            {
+                configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                configureOptions.TokenValidationParameters = tokenValidationParameters;
+                configureOptions.SaveToken = true;
+            });
+
+            services.AddHttpClient<IFacebookClient, FacebookClient>();
+
+            services.Configure<FacebookAuthSettings>(Configuration.GetSection(nameof(FacebookAuthSettings)));
 
             var builder = new ContainerBuilder();
 
@@ -95,6 +148,7 @@ namespace RedPetAPI
                 .UseMvc()
                 .MapWhen(x => x.Request.Path == "/api", RedirectToSwagger);
 
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -123,7 +177,7 @@ namespace RedPetAPI
         /// <param name="options"></param>
         private void UseSwaggerUI(SwaggerUIOptions options)
         {
-            _versions.ForEach(version => options.SwaggerEndpoint($"{version}/swagger.json", $"API v{version}"));
+            versions.ForEach(version => options.SwaggerEndpoint($"{version}/swagger.json", $"API v{version}"));
         }
 
         /// <summary>
@@ -132,7 +186,7 @@ namespace RedPetAPI
         /// <param name="options"></param>
         private void SwaggerGen(SwaggerGenOptions options)
         {
-            _versions.ForEach(version => options.SwaggerDoc(version,
+            versions.ForEach(version => options.SwaggerDoc(version,
                 new Info { Title = "RedPet", Version = $"v{version}" }));
 
             //Determine base path for the application.
@@ -148,7 +202,7 @@ namespace RedPetAPI
 
             //Setear configuracion para no harcodear el false
             options.OperationFilter<AddAuthorizationHeader>(false);
-            options.OperationFilter<AddApiVersionHeader>(_versions.Last());
+            options.OperationFilter<AddApiVersionHeader>(versions.Last());
             options.OperationFilter<AddUnprocessibleEntityResponseType>();
             options.OperationFilter<AddInternalServerErrorResponseType>();
             options.OperationFilter<RemoveExtraneousContentTypes>();
