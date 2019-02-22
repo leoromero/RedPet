@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RedPet.API</name>
+    </assembly>
+    <members>
+        <member name="M:RedPetAPI.Startup.UseSwaggerUI(Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions)">
+            <summary>
+                UseSwaggerUI
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:RedPetAPI.Startup.SwaggerGen(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
+            <summary>
+                SwaggerGen
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:RedPetAPI.Startup.RedirectToSwagger(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+                RedirectToSwagger
+            </summary>
+            <param name="applicationBuilder"></param>
+        </member>
+        <member name="M:RedPetAPI.Startup.HasVersion(System.String,Microsoft.AspNetCore.Mvc.ApiExplorer.ApiDescription)">
+            <summary>
+                HasVersion
+            </summary>
+            <param name="docName"></param>
+            <param name="apiDesc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RedPet.API.Infrastructure.Swagger.AddApiVersionHeader.#ctor(System.String)">
+            <summary>
+                AddApiVersionHeader
+            </summary>
+            <param name="defaultApiVersion"></param>
+        </member>
+        <member name="M:RedPet.API.Infrastructure.Swagger.AddApiVersionHeader.Apply(Swashbuckle.AspNetCore.Swagger.Operation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+                Apply
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:RedPet.API.Infrastructure.Swagger.AddAuthorizationHeader.#ctor(System.Boolean)">
+            <summary>
+                AddAuthorizationHeader
+            </summary>
+            <param name="authorizationRequired"></param>
+        </member>
+        <member name="M:RedPet.API.Infrastructure.Swagger.AddAuthorizationHeader.Apply(Swashbuckle.AspNetCore.Swagger.Operation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+                Apply
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:RedPet.API.Infrastructure.Swagger.AddExampleObjects.Apply(Swashbuckle.AspNetCore.Swagger.Schema,Swashbuckle.AspNetCore.SwaggerGen.SchemaFilterContext)">
+            <summary>
+                Apply
+            </summary>
+            <param name="schema"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:RedPet.API.Infrastructure.Swagger.AddInternalServerErrorResponseType.Apply(Swashbuckle.AspNetCore.Swagger.Operation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+                Apply
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:RedPet.API.Infrastructure.Swagger.AddUnprocessibleEntityResponseType.Apply(Swashbuckle.AspNetCore.Swagger.Operation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+                Apply
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:RedPet.API.Infrastructure.Swagger.RemoveExtraneousContentTypes.Apply(Swashbuckle.AspNetCore.Swagger.Operation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+                Apply
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
+    </members>
+</doc>

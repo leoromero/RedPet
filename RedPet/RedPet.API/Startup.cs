@@ -1,42 +1,38 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using RedPet.API.Infrastructure.Swagger;
+using RedPet.Common.Auth.Models;
+using RedPet.Core.Auth;
+using RedPet.Core.Base;
+using RedPet.Database;
+using RedPet.Database.Entities.Identity;
+using RedPet.Database.Repositories;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using RedPet.API.Infrastructure.Swagger;
-using RedPet.Core;
-using RedPet.Database;
-using RedPet.Database.Repositories;
-using RedPet.Core.Base;
-using RedPet.Database.Entities;
-using Microsoft.AspNetCore.Identity;
-using RedPet.Database.Entities.Identity;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
-using RedPet.Core.Auth;
-using RedPet.Common.Auth.Models;
+using System.Threading.Tasks;
 
 namespace RedPetAPI
 {
     public class Startup
     {
         private readonly List<string> versions = new List<string> { "1" };
-        private const string SecretKey = "iNivDmHLpUA223sqsfhqGbMRdRj1PVkH"; // todo: get this from somewhere secure
-        private readonly SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
 
         public Startup(IConfiguration configuration)
         {
@@ -60,18 +56,20 @@ namespace RedPetAPI
 
             var connectionString = Configuration.GetConnectionString("RedPet");
             services.AddDbContext<RedPetContext>(o =>
-                o.UseSqlServer(connectionString, x => x.MigrationsAssembly("RedPet.Database.Migrations")));
+                o.UseSqlServer(connectionString));
 
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<RedPetContext>();
-            
+
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-            
+
+            SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtAppSettingOptions[nameof(JwtIssuerOptions.Secret)]));
+
             services.Configure<JwtIssuerOptions>(options =>
-            {
-                options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
-                options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
-                options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
-            });
+                {
+                    options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                    options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+                    options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+                });
 
             var tokenValidationParameters = new TokenValidationParameters
             {

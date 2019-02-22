@@ -8,8 +8,8 @@ namespace RedPet.Database.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Promotion> builder)
         {
-            builder.HasMany(x => x.PromotionProducts).WithOne();
-            builder.HasMany(x => x.PromotionServices).WithOne();
+            builder.HasMany(x => x.PromotionProducts).WithOne(x => x.Promotion);
+            builder.HasMany(x => x.PromotionServices).WithOne(x => x.Promotion);
             builder.HasOne(x => x.Audience).WithMany();
         }
     }

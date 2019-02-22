@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace RedPet.API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiVersion("1")]
     public class ExternalAuthController : Controller
     {
         private readonly IAuthService authService;

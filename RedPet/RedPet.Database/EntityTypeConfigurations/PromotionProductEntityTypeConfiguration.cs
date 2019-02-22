@@ -9,7 +9,7 @@ namespace RedPet.Database.EntityTypeConfigurations
         public void Configure(EntityTypeBuilder<PromotionProduct> builder)
         {
             builder.HasOne(x => x.Product).WithMany();
-            builder.HasOne(x => x.Promotion).WithMany();
+            builder.HasOne(x => x.Promotion).WithMany(x => x.PromotionProducts);
         }
     }
 }

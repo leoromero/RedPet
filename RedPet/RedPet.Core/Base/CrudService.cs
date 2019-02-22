@@ -22,11 +22,11 @@ namespace RedPet.Core.Base
         {
             Repository = repository;
         }
-        public virtual async Task<EntityResult<IEnumerable<TViewModel>>> GetAsync()
+        public virtual async Task<EntityResult<List<TViewModel>>> GetAsync()
         {
-            var result = new EntityResult<IEnumerable<TViewModel>>();
+            var result = new EntityResult<List<TViewModel>>();
             var entities = await Repository.GetAsync();
-            result.Entity = Mapper.Map<IEnumerable<TViewModel>>(entities);
+            result.Entity = Mapper.Map<List<TViewModel>>(entities);
             return result;
         }
 
@@ -67,7 +67,7 @@ namespace RedPet.Core.Base
 
     public interface ICrudService<T, TViewModel, in TCreateModel, in TUpdateModel>
     {
-        Task<EntityResult<IEnumerable<TViewModel>>> GetAsync();
+        Task<EntityResult<List<TViewModel>>> GetAsync();
         Task<EntityResult<TViewModel>> GetAsync(int id);
         Task<EntityResult<int>> CreateAsync(TCreateModel model);
         Task UpdateAsync(int id, TUpdateModel model);

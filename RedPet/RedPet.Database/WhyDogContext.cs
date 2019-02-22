@@ -35,6 +35,7 @@ namespace RedPet.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             var typesToRegister = typeof(PetEntityTypeConfiguration).Assembly.GetTypes()
                          .Where(t => t.GetInterfaces().Any(gi => gi.IsGenericType && gi.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>))).ToList();
 
@@ -51,12 +52,13 @@ namespace RedPet.Database
     {
         public RedPetContext CreateDbContext(string[] args)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-              .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-              .AddJsonFile("appsettings.json")
-              .Build();
+            //IConfigurationRoot configuration = new ConfigurationBuilder()
+            //  .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            //  .AddJsonFile("appsettings.json")
+            //  .Build();
+            //configuration.GetConnectionString("RedPet")
             var builder = new DbContextOptionsBuilder<RedPetContext>();
-            builder.UseSqlServer(configuration.GetConnectionString("RedPet"));
+            builder.UseSqlServer("Data Source=SQL5037.site4now.net;Initial Catalog=DB_A45CF7_redpet;User Id=DB_A45CF7_redpet_admin;Password=redpet123;");
             return new RedPetContext(builder.Options);
         }
     }

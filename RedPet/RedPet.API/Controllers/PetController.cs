@@ -8,6 +8,7 @@ using RedPet.Core;
 namespace RedPetAPI.Controllers
 {
     [Route("api/[controller]")]
+    [ApiVersion("1")]
     public class PetController : Controller
     {
         private readonly IPetService petService;
@@ -18,7 +19,7 @@ namespace RedPetAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PetModel>>> GetAsync()
+        public async Task<ActionResult<List<PetModel>>> GetAsync()
         {
             var result = await petService.GetAsync();
             return result.ConvertToActionResult(System.Net.HttpStatusCode.OK);

@@ -9,6 +9,7 @@ using RedPet.Core;
 namespace RedPetAPI.Controllers
 {
     [Route("api/[controller]")]
+    [ApiVersion("1")]
     public class UserController : Controller
     {
         private readonly ICustomerService userService;
@@ -19,14 +20,14 @@ namespace RedPetAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CustomerModel>>> GetAsync()
+        public async Task<ActionResult<List<CustomerModel>>> GetAsync()
         {
             var result = await userService.GetAsync();
             return result.ConvertToActionResult(System.Net.HttpStatusCode.OK);
         }
 
         [HttpGet("Pets/{userId}")]
-        public async Task<ActionResult<IEnumerable<PetModel>>> GetPetsAsync(int userId)
+        public async Task<ActionResult<List<PetModel>>> GetPetsAsync(int userId)
         {
             var result = await userService.GetPetsAsync(userId);
             return result.ConvertToActionResult(System.Net.HttpStatusCode.OK);
