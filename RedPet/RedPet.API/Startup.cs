@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using RedPet.API.Infrastructure.DI;
 using RedPet.API.Infrastructure.Swagger;
 using RedPet.Common.Auth.Models;
 using RedPet.Core.Auth;
@@ -107,13 +108,9 @@ namespace RedPetAPI
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 
-            builder.RegisterAssemblyTypes(typeof(GenericRepository<>).Assembly)
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
-
-            builder.RegisterAssemblyTypes(typeof(BaseService).Assembly)
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
+            builder.RegisterModule(new AuthModule());
+            builder.RegisterModule(new ServicesModule());
+            builder.RegisterModule(new RepositoriesModule());
 
             builder.Populate(services);
 
@@ -138,16 +135,15 @@ namespace RedPetAPI
             {
                 if (!env.IsDevelopment())
                 {
-                    swaggerDoc.BasePath = "/api";
+                    swaggerDoc.BasePath = "/";
                 }
             }));
 
+            app.UseAuthentication();
             app.UseSwaggerUI(UseSwaggerUI)
                 .UseMvc()
                 .MapWhen(x => x.Request.Path == "/api", RedirectToSwagger);
-
-            app.UseAuthentication();
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();

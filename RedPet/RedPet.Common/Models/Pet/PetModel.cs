@@ -16,6 +16,7 @@ namespace RedPet.Common.Models.Pet
         public bool Sterilized { get; set; }
         public string Observations { get; set; }
         public CustomerModel Owner { get; set; }
+        public int Id { get; set; }
     }
 
     public class PetCreateUpdateModel : ICreateModel, IUpdateModel
@@ -29,6 +30,5 @@ namespace RedPet.Common.Models.Pet
         public char Gender { get; set; }
         public bool Sterilized { get; set; }
         public string Observations { get; set; }
-        public int OwnerId { get; set; }
     }
 }

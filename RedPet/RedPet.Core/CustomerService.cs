@@ -29,10 +29,10 @@ namespace RedPet.Core
             return result;
         }
 
-        public async Task<EntityResult<List<PetModel>>> GetPetsAsync(int userId)
+        public async Task<EntityResult<List<PetModel>>> GetPetsAsync(string userName)
         {
             var result = new EntityResult<List<PetModel>>();
-            var pets = await repository.GetPetsAsync(userId);
+            var pets = await repository.GetPetsAsync(userName);
             result.Entity = Mapper.Map<List<PetModel>>(pets);
             return result;
         }
@@ -40,7 +40,7 @@ namespace RedPet.Core
 
     public interface ICustomerService : ICrudService<Customer, CustomerModel, CustomerModel, CustomerModel>
     {
-        Task<EntityResult<List<PetModel>>> GetPetsAsync(int userId);
+        Task<EntityResult<List<PetModel>>> GetPetsAsync(string userName);
         Task<EntityResult<CustomerModel>> GetByEmailAsync(string email);
     }
 }

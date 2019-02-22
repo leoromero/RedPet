@@ -13,16 +13,13 @@ namespace RedPet.Common.Models.Booking
         public decimal Taxes { get; set; }
         public decimal TotalPrice { get; set; }
         public DateTime DeliveryDateTime { get; set; }
+        public int Id { get; set; }
 
-        public int? ServiceId { get; set; }
-        public int? ProductId { get; set; }
-        public int? PromotionId { get; set; }
-        public int UserId { get; set; }
-
-        public virtual ServiceModel Service { get; set; }
-        public virtual ProductModel Product { get; set; }
-        public virtual PromotionModel Promotion { get; set; }
-        public virtual CustomerModel User { get; set; }
+        public ServiceModel Service { get; set; }
+        public ProductModel Product { get; set; }
+        public PromotionModel Promotion { get; set; }
+        public CustomerModel User { get; set; }
+        public StateModel State { get; set; }
     }
 
     public class BookingCreateUpdateModel : ICreateModel, IUpdateModel
@@ -35,7 +32,6 @@ namespace RedPet.Common.Models.Booking
         public int? ServiceId { get; set; }
         public int? ProductId { get; set; }
         public int? PromotionId { get; set; }
-        public int UserId { get; set; }
     }
 
 }

@@ -5,8 +5,10 @@ namespace RedPet.Common.Models.Service
 {
     public class ServiceModel : IViewModel, ICreateModel, IUpdateModel
     {
-        public string Description { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
-        public long Id { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
+        public decimal Taxes { get; set; }
     }
 }

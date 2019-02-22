@@ -7,7 +7,7 @@ namespace RedPet.Common.Models.Promotion
     {
         public ServiceModel Service { get; set; }
         public PromotionModel Promotion { get; set; }
-        public int ServiceId { get; set; }
-        public int PromotionId { get; set; }
+        public int? ServiceId { get; set; }
+        public int? PromotionId { get; set; }
     }
 }

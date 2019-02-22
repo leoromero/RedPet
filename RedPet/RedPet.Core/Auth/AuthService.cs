@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using RedPet.Common.Auth.Models;
 using RedPet.Common.Models.Base;
 using RedPet.Common.Models.User;
@@ -18,29 +19,36 @@ namespace RedPet.Core.Auth
         private readonly ICustomerService customerService;
         private readonly IFacebookClient facebookClient;
 
-        public AuthService( IJwtFactory jwtFactory, JwtIssuerOptions jwtOptions, ICustomerService customerService, IFacebookClient facebookClient)
+        public AuthService( IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions, ICustomerService customerService, IFacebookClient facebookClient)
         {
             this.jwtFactory = jwtFactory;
-            this.jwtOptions = jwtOptions;
+            this.jwtOptions = jwtOptions.Value;
             this.customerService = customerService;
             this.facebookClient = facebookClient;
         }
 
-        public string GenerateJwt(ClaimsIdentity identity, string userName, JwtIssuerOptions jwtOptions, JsonSerializerSettings serializerSettings)
+        public EntityResult<JwtModel> GenerateGenericJwt()
         {
-            var response = new
-            {
-                id = identity.Claims.SingleOrDefault(c => c.Type == "id").Value,
-                auth_token = jwtFactory.GenerateEncodedToken(userName, identity),
-                expires_in = (int)jwtOptions.ValidFor.TotalSeconds
-            };
+            var result = new EntityResult<JwtModel>();
+            
+            result.Entity = GenerateJwt(jwtFactory.GenerateClaimsIdentity("leo", "123"), "leo", jwtOptions, new JsonSerializerSettings { Formatting = Formatting.None });
 
-            return JsonConvert.SerializeObject(response, serializerSettings);
+            return result;
         }
 
-        public async Task<EntityResult<string>> GenerateJwtFromFacebookAsync(FacebookAuthViewModel model)
+        public JwtModel GenerateJwt(ClaimsIdentity identity, string userName, JwtIssuerOptions jwtOptions, JsonSerializerSettings serializerSettings)
         {
-            var result = new EntityResult<string>();
+            return new JwtModel
+            {
+                Id = identity.Claims.SingleOrDefault(c => c.Type == "id").Value,
+                AuthToken = jwtFactory.GenerateEncodedToken(userName, identity),
+                ExpiresIn = (int)jwtOptions.ValidFor.TotalSeconds
+            };
+        }
+
+        public async Task<EntityResult<JwtModel>> GenerateJwtFromFacebookAsync(FacebookAuthViewModel model)
+        {
+            var result = new EntityResult<JwtModel>();
             // 1.generate an app access token
             var appAccessTokenResponse = await facebookClient.GenerateAppAccessTokenAsync();
             var appAccessToken = JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);

@@ -8,7 +8,8 @@ namespace RedPet.Core.Auth
 {
     public interface IAuthService
     {
-        string GenerateJwt(ClaimsIdentity identity, string userName, JwtIssuerOptions jwtOptions, JsonSerializerSettings serializerSettings);
-        Task<EntityResult<string>> GenerateJwtFromFacebookAsync(FacebookAuthViewModel model);
+        JwtModel GenerateJwt(ClaimsIdentity identity, string userName, JwtIssuerOptions jwtOptions, JsonSerializerSettings serializerSettings);
+        Task<EntityResult<JwtModel>> GenerateJwtFromFacebookAsync(FacebookAuthViewModel model);
+        EntityResult<JwtModel> GenerateGenericJwt();
     }
 }

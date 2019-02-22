@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RedPet.API.Extensions;
 using RedPet.Common.Models.Pet;
@@ -10,11 +11,12 @@ namespace RedPetAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiVersion("1")]
-    public class UserController : Controller
+    [Authorize]
+    public class CustomerController : Controller
     {
         private readonly ICustomerService userService;
 
-        public UserController(ICustomerService userService)
+        public CustomerController(ICustomerService userService)
         {
             this.userService = userService;
         }
@@ -26,10 +28,11 @@ namespace RedPetAPI.Controllers
             return result.ConvertToActionResult(System.Net.HttpStatusCode.OK);
         }
 
-        [HttpGet("Pets/{userId}")]
-        public async Task<ActionResult<List<PetModel>>> GetPetsAsync(int userId)
+        [HttpGet("Pets")]
+        public async Task<ActionResult<List<PetModel>>> GetPetsAsync()
         {
-            var result = await userService.GetPetsAsync(userId);
+            var userName = User.Identity.Name;
+            var result = await userService.GetPetsAsync(userName);
             return result.ConvertToActionResult(System.Net.HttpStatusCode.OK);
         }
     }

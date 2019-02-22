@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RedPet.API.Extensions;
 using RedPet.Common.Models.Booking;
@@ -9,6 +10,7 @@ namespace RedPetAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiVersion("1")]
+    [Authorize]
     public class BookingController : Controller
     {
         private readonly IBookingService bookingService;
