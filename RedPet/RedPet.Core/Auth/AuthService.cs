@@ -66,7 +66,7 @@ namespace RedPet.Core.Auth
             var userInfo = JsonConvert.DeserializeObject<FacebookUserData>(userInfoResponse);
 
             // 4. ready to create the local user account (if necessary) and jwt
-            var customer = await customerService.GetByEmailAsync(userInfo.Email);
+            var customer = customerService.GetByEmailAsync(userInfo.Email).Result.Entity;
 
             if (customer == null)
             {
@@ -81,17 +81,16 @@ namespace RedPet.Core.Auth
                 };
 
                 await customerService.CreateAsync(user);
+
+                customer = customerService.GetByEmailAsync(userInfo.Email).Result.Entity;
             }
-
-            // generate the jwt for the local user...
-            var localUser = customerService.GetByEmailAsync(userInfo.Email).Result.Entity;
-
-            if (localUser == null)
+            
+            if (customer == null)
             {
                 // TODO: Add error to result.
             }
 
-            result.Entity = GenerateJwt(jwtFactory.GenerateClaimsIdentity(localUser.UserName, localUser.UserId), localUser.UserName, jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
+            result.Entity = GenerateJwt(jwtFactory.GenerateClaimsIdentity(customer.UserName, customer.UserId), customer.UserName, jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
 
             return result;
         }
