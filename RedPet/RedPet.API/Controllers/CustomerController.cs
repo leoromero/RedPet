@@ -14,17 +14,24 @@ namespace RedPetAPI.Controllers
     [Authorize]
     public class CustomerController : Controller
     {
-        private readonly ICustomerService userService;
+        private readonly ICustomerService customerService;
 
-        public CustomerController(ICustomerService userService)
+        public CustomerController(ICustomerService customerService)
         {
-            this.userService = userService;
+            this.customerService = customerService;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<CustomerModel>>> GetAsync()
         {
-            var result = await userService.GetAsync();
+            var result = await customerService.GetAsync();
+            return result.ConvertToActionResult(System.Net.HttpStatusCode.OK);
+        }
+
+        [HttpGet("{userName}")]
+        public async Task<ActionResult<CustomerModel>> GetAsync(string userName)
+        {
+            var result = await customerService.GetByEmailAsync(userName);
             return result.ConvertToActionResult(System.Net.HttpStatusCode.OK);
         }
 
@@ -32,7 +39,7 @@ namespace RedPetAPI.Controllers
         public async Task<ActionResult<List<PetModel>>> GetPetsAsync()
         {
             var userName = User.Identity.Name;
-            var result = await userService.GetPetsAsync(userName);
+            var result = await customerService.GetPetsAsync(userName);
             return result.ConvertToActionResult(System.Net.HttpStatusCode.OK);
         }
     }

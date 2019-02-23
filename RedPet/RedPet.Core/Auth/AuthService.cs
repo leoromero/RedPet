@@ -40,7 +40,7 @@ namespace RedPet.Core.Auth
         {
             return new JwtModel
             {
-                Id = identity.Claims.SingleOrDefault(c => c.Type == "id").Value,
+                UserName = identity.Claims.SingleOrDefault(c => c.Type == "id").Value,
                 AuthToken = jwtFactory.GenerateEncodedToken(userName, identity),
                 ExpiresIn = (int)jwtOptions.ValidFor.TotalSeconds
             };
