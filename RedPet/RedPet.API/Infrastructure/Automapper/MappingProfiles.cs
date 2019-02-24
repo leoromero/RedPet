@@ -14,7 +14,13 @@ namespace RedPet.API.Infrastructure.Automapper
     {
         public MappingProfiles()
         {
-            CreateMap<Customer, CustomerModel>();
+            CreateMap<Customer, CustomerModel>()
+                .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.User.Email))
+                .ForMember(dest => dest.FacebookId, opts => opts.MapFrom(src => src.User.FacebookId))
+                .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.User.FirstName))
+                .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.User.Gender))
+                .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.User.LastName))
+                .ForMember(dest => dest.UserName, opts => opts.MapFrom(src => src.User.UserName));
             CreateMap<CustomerModel, Customer>()
                 .ForMember(x => x.User, opts => opts.MapFrom(src => new User()
                 {
