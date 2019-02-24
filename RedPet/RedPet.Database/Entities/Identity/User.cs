@@ -7,6 +7,7 @@ namespace RedPet.Database.Entities.Identity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Gender { get; set; }
         public IEnumerable<IdentityRole> Roles { get; set; }
         public long FacebookId { get; set; }
     }

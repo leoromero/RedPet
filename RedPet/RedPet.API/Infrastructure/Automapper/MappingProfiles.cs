@@ -6,10 +6,7 @@ using RedPet.Common.Models.Promotion;
 using RedPet.Common.Models.Service;
 using RedPet.Common.Models.User;
 using RedPet.Database.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using RedPet.Database.Entities.Identity;
 
 namespace RedPet.API.Infrastructure.Automapper
 {
@@ -17,7 +14,17 @@ namespace RedPet.API.Infrastructure.Automapper
     {
         public MappingProfiles()
         {
-            CreateMap<Customer, CustomerModel>().ReverseMap();
+            CreateMap<Customer, CustomerModel>();
+            CreateMap<CustomerModel, Customer>()
+                .ForMember(x => x.User, opts => opts.MapFrom(src => new User()
+                {
+                    Email = src.Email,
+                    FirstName = src.FirstName,
+                    LastName = src.LastName,
+                    FacebookId = src.FacebookId,
+                    UserName = src.UserName,
+                    Gender = src.Gender
+                }));
 
             CreateMap<Pet, PetModel>().ReverseMap();
             CreateMap<Pet, PetCreateUpdateModel>().ReverseMap();
