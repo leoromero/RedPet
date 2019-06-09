@@ -51,7 +51,7 @@ namespace RedPet.Database.Repositories
 
         public virtual async Task<IEnumerable<T>> GetAsync()
         {
-            return await DbSet.ToListAsync();
+            return await DbSet.Where(x => !x.InactivationDate.HasValue).ToListAsync();
         }
     }
 }

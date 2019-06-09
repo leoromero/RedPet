@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.Extensions.Options;
 using RedPet.Common.Auth.Models;
+using RedPet.Common.Models.User;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -25,7 +26,7 @@ namespace RedPet.Core.Auth
                  new Claim(JwtRegisteredClaimNames.Sub, userName),
                  new Claim(JwtRegisteredClaimNames.Jti, jwtOptions.JtiGenerator()),
                  new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
-                 identity.FindFirst("rol"),
+                 identity.FindFirst("role"),
                  identity.FindFirst("id")
              };
 
@@ -43,14 +44,20 @@ namespace RedPet.Core.Auth
             return encodedJwt;
         }
 
-        public ClaimsIdentity GenerateClaimsIdentity(string userName, string id)
+        public ClaimsIdentity GenerateClaimsIdentity(UserModel user)
         {
-            return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
+            return GenerateClaimsIdentity(user.UserName, user.Id, user.Role);
+        }
+
+        public ClaimsIdentity GenerateClaimsIdentity(string username, int id, string role)
+        {
+            return new ClaimsIdentity(new GenericIdentity(username, "JWT"), new[]
             {
-                new Claim("id", id),
-                new Claim("rol", "api_access")
+                new Claim("role", role),
+                new Claim("id", id.ToString())
             });
         }
+
 
         /// <returns>Date converted to seconds since Unix epoch (Jan 1, 1970, midnight UTC).</returns>
         private static long ToUnixEpochDate(DateTime date)

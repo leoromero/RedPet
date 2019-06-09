@@ -7,7 +7,7 @@ using RedPet.Common.Models.Service;
 
 namespace RedPet.Core
 {
-    public class ServiceService : CrudService<Service, ServiceModel, ServiceModel, ServiceModel>, IServiceService
+    public class ServiceService : CrudService<Service, ServiceModel>, IServiceService
     {
         public ServiceService(IUnitOfWork unitOfWork, IMapper mapper)
             : base(unitOfWork, unitOfWork.GetRepository<IServiceRepository>(), mapper)
@@ -15,7 +15,7 @@ namespace RedPet.Core
         }
     }
 
-    public interface IServiceService : ICrudService<Service, ServiceModel, ServiceModel, ServiceModel>
+    public interface IServiceService : ICrudService<Service, ServiceModel>
     {
     }
 }

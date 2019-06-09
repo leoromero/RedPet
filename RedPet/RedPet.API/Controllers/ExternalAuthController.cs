@@ -17,19 +17,13 @@ namespace RedPet.API.Controllers
         {
             this.authService = authService;
         }
+
         // POST api/externalauth/facebook
         [HttpPost("facebook")]
         public async Task<ActionResult<JwtModel>> Facebook([FromBody]FacebookAuthViewModel model)
         {
             var response = await authService.GenerateJwtFromFacebookAsync(model);
-            return response.ConvertToActionResult(HttpStatusCode.OK);
-        }
-
-        [HttpPost]
-        public ActionResult<JwtModel> PostAsync()
-        {
-            var response = authService.GenerateGenericJwt();
-            return response.ConvertToActionResult(HttpStatusCode.OK);
+            return response.ConvertToActionResult(HttpStatusCode.Created);
         }
     }
 }

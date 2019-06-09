@@ -7,7 +7,7 @@ using RedPet.Common.Models.Product;
 
 namespace RedPet.Core
 {
-    public class ProductService : CrudService<Product, ProductModel, ProductModel, ProductModel>, IProductService
+    public class ProductService : CrudService<Product, ProductModel>, IProductService
     {
         public ProductService(IUnitOfWork unitOfWork, IMapper mapper)
             : base(unitOfWork, unitOfWork.GetRepository<IProductRepository>(), mapper)
@@ -15,7 +15,7 @@ namespace RedPet.Core
         }
     }
 
-    public interface IProductService : ICrudService<Product, ProductModel, ProductModel, ProductModel>
+    public interface IProductService : ICrudService<Product, ProductModel>
     {
     }
 }

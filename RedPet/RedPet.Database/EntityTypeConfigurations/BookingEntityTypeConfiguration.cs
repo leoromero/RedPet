@@ -12,6 +12,7 @@ namespace RedPet.Database.EntityTypeConfigurations
             builder.HasOne(x => x.Promotion).WithMany();
             builder.HasOne(x => x.Service).WithMany();
             builder.HasOne(x => x.Customer).WithMany();
+            builder.HasOne(x => x.Pet).WithMany().IsRequired(false).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

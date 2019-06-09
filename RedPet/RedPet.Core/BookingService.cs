@@ -7,7 +7,7 @@ using RedPet.Common.Models.Booking;
 
 namespace RedPet.Core
 {
-    public class BookingService : CrudService<Booking, BookingModel, BookingCreateUpdateModel, BookingCreateUpdateModel>, IBookingService
+    public class BookingService : CrudService<Booking, BookingModel, BookingCreateUpdateModel>, IBookingService
     {
         public BookingService(IUnitOfWork unitOfWork, IMapper mapper)
             : base(unitOfWork, unitOfWork.GetRepository<IBookingRepository>(), mapper)
@@ -15,7 +15,7 @@ namespace RedPet.Core
         }
     }
 
-    public interface IBookingService : ICrudService<Booking, BookingModel, BookingCreateUpdateModel, BookingCreateUpdateModel>
+    public interface IBookingService : ICrudService<Booking, BookingModel, BookingCreateUpdateModel>
     {
     }
 }

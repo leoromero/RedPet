@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using RedPet.API.Infrastructure.DI;
 using RedPet.API.Infrastructure.Swagger;
 using RedPet.Common.Auth.Models;
@@ -46,7 +47,12 @@ namespace RedPetAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddControllersAsServices();
+            services.AddMvc().AddControllersAsServices()
+                .AddJsonOptions(opt =>
+                {
+                    opt.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+                });
+
             services.AddAutoMapper();
             services.AddSwaggerGen(SwaggerGen);
             // In production, the React files will be served from this directory
@@ -59,7 +65,7 @@ namespace RedPetAPI
             services.AddDbContext<RedPetContext>(o =>
                 o.UseSqlServer(connectionString));
 
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<RedPetContext>();
+            services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<RedPetContext>();
 
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
@@ -70,6 +76,7 @@ namespace RedPetAPI
                     options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
                     options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
                     options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+                    options.Secret = jwtAppSettingOptions[nameof(JwtIssuerOptions.Secret)];
                 });
 
             var tokenValidationParameters = new TokenValidationParameters
@@ -130,6 +137,8 @@ namespace RedPetAPI
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseSwagger(c => c.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
             {

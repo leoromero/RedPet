@@ -7,7 +7,7 @@ using RedPet.Common.Models.Promotion;
 
 namespace RedPet.Core
 {
-    public class PromotionService : CrudService<Promotion, PromotionModel, PromotionCreateUpdateModel, PromotionCreateUpdateModel>, IPromotionService
+    public class PromotionService : CrudService<Promotion, PromotionModel, PromotionCreateUpdateModel>, IPromotionService
     {
         public PromotionService(IUnitOfWork unitOfWork, IMapper mapper)
             : base(unitOfWork, unitOfWork.GetRepository<IPromotionRepository>(), mapper)
@@ -15,7 +15,7 @@ namespace RedPet.Core
         }
     }
 
-    public interface IPromotionService : ICrudService<Promotion, PromotionModel, PromotionCreateUpdateModel, PromotionCreateUpdateModel>
+    public interface IPromotionService : ICrudService<Promotion, PromotionModel, PromotionCreateUpdateModel>
     {
     }
 }

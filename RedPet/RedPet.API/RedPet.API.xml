@@ -4,30 +4,11 @@
         <name>RedPet.API</name>
     </assembly>
     <members>
-        <member name="M:RedPetAPI.Startup.UseSwaggerUI(Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions)">
+        <member name="M:RedPet.API.Extensions.UserExtensions.GetUserId(System.Security.Claims.ClaimsPrincipal)">
             <summary>
-                UseSwaggerUI
+            Returns the logged user Id, -1 if it couldn't find it.
             </summary>
-            <param name="options"></param>
-        </member>
-        <member name="M:RedPetAPI.Startup.SwaggerGen(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
-            <summary>
-                SwaggerGen
-            </summary>
-            <param name="options"></param>
-        </member>
-        <member name="M:RedPetAPI.Startup.RedirectToSwagger(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
-            <summary>
-                RedirectToSwagger
-            </summary>
-            <param name="applicationBuilder"></param>
-        </member>
-        <member name="M:RedPetAPI.Startup.HasVersion(System.String,Microsoft.AspNetCore.Mvc.ApiExplorer.ApiDescription)">
-            <summary>
-                HasVersion
-            </summary>
-            <param name="docName"></param>
-            <param name="apiDesc"></param>
+            <param name="user"></param>
             <returns></returns>
         </member>
         <member name="M:RedPet.API.Infrastructure.Swagger.AddApiVersionHeader.#ctor(System.String)">
@@ -83,6 +64,32 @@
             </summary>
             <param name="operation"></param>
             <param name="context"></param>
+        </member>
+        <member name="M:RedPetAPI.Startup.UseSwaggerUI(Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions)">
+            <summary>
+                UseSwaggerUI
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:RedPetAPI.Startup.SwaggerGen(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
+            <summary>
+                SwaggerGen
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:RedPetAPI.Startup.RedirectToSwagger(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+                RedirectToSwagger
+            </summary>
+            <param name="applicationBuilder"></param>
+        </member>
+        <member name="M:RedPetAPI.Startup.HasVersion(System.String,Microsoft.AspNetCore.Mvc.ApiExplorer.ApiDescription)">
+            <summary>
+                HasVersion
+            </summary>
+            <param name="docName"></param>
+            <param name="apiDesc"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

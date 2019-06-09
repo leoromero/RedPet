@@ -16,11 +16,13 @@ namespace RedPet.Database.Entities
         public int? PromotionId { get; set; }
         public int CustomerId { get; set; }
         public int StateId { get; set; }
+        public int? PetId { get; set; }
 
         public virtual Service Service { get; set; }
         public virtual Product Product { get; set; }
         public virtual Promotion Promotion { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual State State { get; set; }
+        public virtual Pet Pet { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using RedPet.Core;
+using RedPet.Core.Auth;
 using RedPet.Core.Base;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,10 @@ namespace RedPet.API.Infrastructure.DI
                 .InstancePerLifetimeScope();
 
             builder.RegisterAssemblyTypes(typeof(PetService).Assembly)
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterAssemblyTypes(typeof(AuthService).Assembly)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
         }

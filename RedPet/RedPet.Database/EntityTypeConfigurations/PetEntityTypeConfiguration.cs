@@ -11,7 +11,6 @@ namespace RedPet.Database.EntityTypeConfigurations
             builder.HasOne(x => x.Owner).WithMany(x=>x.Pets).HasForeignKey(x=>x.OwnerId);
             builder.HasOne(x => x.PetSize).WithMany();
             builder.HasOne(x => x.WeightRange).WithMany();
-            builder.HasOne(x => x.HairType).WithMany();
         }
     }
 }

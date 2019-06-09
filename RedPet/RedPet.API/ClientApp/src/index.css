@@ -1,6 +1,27 @@
-@media (max-width: 767px) {
-    /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
-    body {
-        padding-top: 50px;
-    }
+
+html, body, #root {
+    height: 100%;
 }
+  .st0{fill:#fff}
+  
+  svg.redPetIcon {
+    -webkit-transform:scale(2.25);
+  }
+
+  svg:hover .openedeye  {   
+   -webkit-animation:blink 0.5s;
+   animation-fill-mode: forwards;  
+  }
+  
+  @-webkit-keyframes blink {
+    0% {
+      -webkit-transform:scale(1,1);
+    transform-origin: 50% 50%;
+   transform-box: fill-box;
+    }
+    100% {
+      -webkit-transform:scale(1,0);
+    transform-origin: 50% 50%;
+   transform-box: fill-box;
+    }
+  }  

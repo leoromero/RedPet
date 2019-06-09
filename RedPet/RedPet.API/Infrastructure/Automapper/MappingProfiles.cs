@@ -7,6 +7,7 @@ using RedPet.Common.Models.Service;
 using RedPet.Common.Models.User;
 using RedPet.Database.Entities;
 using RedPet.Database.Entities.Identity;
+using System.Linq;
 
 namespace RedPet.API.Infrastructure.Automapper
 {
@@ -22,18 +23,14 @@ namespace RedPet.API.Infrastructure.Automapper
                 .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.User.LastName))
                 .ForMember(dest => dest.UserName, opts => opts.MapFrom(src => src.User.UserName));
             CreateMap<CustomerModel, Customer>()
-                .ForMember(x => x.User, opts => opts.MapFrom(src => new User()
-                {
-                    Email = src.Email,
-                    FirstName = src.FirstName,
-                    LastName = src.LastName,
-                    FacebookId = src.FacebookId,
-                    UserName = src.UserName,
-                    Gender = src.Gender
-                }));
+                .ForMember(x => x.User, opts => opts.Ignore());
+            CreateMap<CustomerModel, User>();
+
+            CreateMap<UserModel, User>().ReverseMap();
 
             CreateMap<Pet, PetModel>().ReverseMap();
             CreateMap<Pet, PetCreateUpdateModel>().ReverseMap();
+
             CreateMap<HairType, HairTypeModel>().ReverseMap();
             CreateMap<PetSize, PetSizeModel>().ReverseMap();
             CreateMap<WeightRange, WeightRangeModel>().ReverseMap();
@@ -49,6 +46,11 @@ namespace RedPet.API.Infrastructure.Automapper
             CreateMap<PromotionProduct, PromotionProductModel>().ReverseMap();
             CreateMap<PromotionService, PromotionServiceModel>().ReverseMap();
             CreateMap<Audience, AudienceModel>().ReverseMap();
+
+            CreateMap<Vaccine, VaccineModel>().ReverseMap();
+            CreateMap<Vaccination, VaccinationModel>().ReverseMap();
+
+            CreateMap<Vet, VetModel>().ReverseMap();
         }
     }
 }

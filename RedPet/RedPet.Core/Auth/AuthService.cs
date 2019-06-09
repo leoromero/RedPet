@@ -1,12 +1,17 @@
 ﻿using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using RedPet.Common.Auth.Models;
+using RedPet.Common.Extensions;
+using RedPet.Common.Models.Auth;
 using RedPet.Common.Models.Base;
 using RedPet.Common.Models.User;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,33 +22,17 @@ namespace RedPet.Core.Auth
         private readonly IJwtFactory jwtFactory;
         private readonly JwtIssuerOptions jwtOptions;
         private readonly ICustomerService customerService;
+        private readonly IUserService userService;
         private readonly IFacebookClient facebookClient;
 
-        public AuthService( IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions, ICustomerService customerService, IFacebookClient facebookClient)
+        public AuthService( IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions, 
+            ICustomerService customerService, IUserService userService, IFacebookClient facebookClient)
         {
             this.jwtFactory = jwtFactory;
             this.jwtOptions = jwtOptions.Value;
             this.customerService = customerService;
+            this.userService = userService;
             this.facebookClient = facebookClient;
-        }
-
-        public EntityResult<JwtModel> GenerateGenericJwt()
-        {
-            var result = new EntityResult<JwtModel>();
-            
-            result.Entity = GenerateJwt(jwtFactory.GenerateClaimsIdentity("leo", "123"), "leo", jwtOptions, new JsonSerializerSettings { Formatting = Formatting.None });
-
-            return result;
-        }
-
-        public JwtModel GenerateJwt(ClaimsIdentity identity, string userName, JwtIssuerOptions jwtOptions, JsonSerializerSettings serializerSettings)
-        {
-            return new JwtModel
-            {
-                UserName = identity.Claims.SingleOrDefault(c => c.Type == "id").Value,
-                AuthToken = jwtFactory.GenerateEncodedToken(userName, identity),
-                ExpiresIn = (int)jwtOptions.ValidFor.TotalSeconds
-            };
         }
 
         public async Task<EntityResult<JwtModel>> GenerateJwtFromFacebookAsync(FacebookAuthViewModel model)
@@ -89,10 +78,99 @@ namespace RedPet.Core.Auth
             {
                 // TODO: Add error to result.
             }
+            var refreshToken = await GenerateRefreshToken(customer.Email);
 
-            result.Entity = GenerateJwt(jwtFactory.GenerateClaimsIdentity(customer.UserName, customer.UserId), customer.UserName, jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
+            result.Entity = GenerateJwt(jwtFactory.GenerateClaimsIdentity(customer.UserName, customer.UserId, "Customer"), customer.UserName, refreshToken);
 
             return result;
+        }
+
+        private JwtModel GenerateJwt(ClaimsIdentity identity, string userName, string refreshToken)
+        {
+            return new JwtModel
+            {
+                UserName = identity.Claims.SingleOrDefault(c => c.Type == "id").Value,
+                AuthToken = jwtFactory.GenerateEncodedToken(userName, identity),
+                RefreshToken = refreshToken,
+                ExpiresIn = (int)jwtOptions.ValidFor.TotalSeconds
+            };
+        }
+        private async Task<JwtModel> GenerateJwtAsync(UserModel user)
+        {
+            var refreshToken = await GenerateRefreshToken(user.UserName);
+            return GenerateJwt(jwtFactory.GenerateClaimsIdentity(user), user.UserName, refreshToken);
+        }
+        
+        private async Task<JwtModel> GenerateJwtFromUserNameAsync(string email)
+        {
+            var user = userService.GetByEmailAsync(email).Result.Entity;
+
+            return await GenerateJwtAsync(user);
+        }
+
+        public async Task<EntityResult<JwtModel>> RefreshTokenAsync(RefreshTokenModel model)
+        {
+            var result = new EntityResult<JwtModel>();
+            var principal = new ClaimsPrincipal();
+
+            try
+            {
+                principal = GetPrincipalFromExpiredToken(model.AuthToken);
+            }
+            catch (SecurityTokenException ex)
+            {
+                result.AddError("Invalid Token");
+            }
+
+            var username = principal.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var savedRefreshToken = await userService.GetRefreshTokenAsync(username);
+
+            if (savedRefreshToken != model.RefreshToken)
+            {
+                result.AddError("Invalid Refresh Token");
+                return result;
+            }
+
+            var newJwtToken = await GenerateJwtFromUserNameAsync(username);
+
+            result.Entity = newJwtToken;
+            return result;
+        }
+
+        private async Task<string> GenerateRefreshToken(string email)
+        {
+            var refreshToken = string.Empty;
+            var randomNumber = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                refreshToken = Convert.ToBase64String(randomNumber);
+            }
+
+            await userService.CreateRefreshTokenAsync(email, refreshToken);
+
+            return refreshToken;
+        }
+
+        private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+        {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = true,
+                ValidateIssuer = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtOptions.Issuer,
+                ValidAudience = jwtOptions.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Secret)),
+                ValidateLifetime = false
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
+            if (!(securityToken is JwtSecurityToken jwtSecurityToken) || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException("Invalid token");
+
+            return principal;
         }
     }
 }

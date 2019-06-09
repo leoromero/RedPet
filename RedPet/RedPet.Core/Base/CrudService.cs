@@ -9,6 +9,27 @@ using RedPet.Common.Models.Base;
 
 namespace RedPet.Core.Base
 {
+    public abstract class CrudService<T, TViewModel> : CrudService<T, TViewModel, TViewModel, TViewModel>
+        where T : class, IBaseEntity
+        where TViewModel : IViewModel, ICreateModel, IUpdateModel
+    {
+        protected CrudService(IUnitOfWork unitOfWork, IRepository<T> repository, IMapper mapper)
+            : base(unitOfWork, repository, mapper)
+        {
+        }
+    }
+
+    public abstract class CrudService<T, TViewModel, TCreateUpdateModel> : CrudService<T, TViewModel, TCreateUpdateModel, TCreateUpdateModel>
+        where T : class, IBaseEntity
+        where TViewModel : IViewModel
+        where TCreateUpdateModel : ICreateModel, IUpdateModel
+    {
+        protected CrudService(IUnitOfWork unitOfWork, IRepository<T> repository, IMapper mapper)
+            : base(unitOfWork, repository, mapper)
+        {
+        }
+    }
+
     public abstract class CrudService<T, TViewModel, TCreateModel, TUpdateModel> : BaseService, ICrudService<T, TViewModel, TCreateModel, TUpdateModel>
         where T : class, IBaseEntity
         where TViewModel : IViewModel
@@ -72,5 +93,13 @@ namespace RedPet.Core.Base
         Task<EntityResult<int>> CreateAsync(TCreateModel model);
         Task UpdateAsync(int id, TUpdateModel model);
         Task DeleteAsync(int id);
+    }
+
+    public interface ICrudService<T, TModel> : ICrudService<T, TModel, TModel, TModel>
+    {
+    }
+
+    public interface ICrudService<T, TModel, in TCreateUpdateModel> : ICrudService<T, TModel, TCreateUpdateModel, TCreateUpdateModel>
+    {
     }
 }

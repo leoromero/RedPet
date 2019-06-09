@@ -10,5 +10,10 @@ namespace RedPet.Database.Entities
         public string Description { get; set; }
         public decimal Price { get; set; }
         public decimal Taxes { get; set; }
+        public int ServiceTypeId { get; set; }
+        public int? PetSizeId { get; set; }
+
+        public virtual ServiceType Type { get; set; }
+        public virtual PetSize PetSize { get; set; }
     }
 }

@@ -8,7 +8,8 @@ namespace RedPet.Database.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Service> builder)
         {
-            
+            builder.HasOne(x => x.Type).WithMany();
+            builder.HasOne(x => x.PetSize).WithMany();
         }
     }
 }

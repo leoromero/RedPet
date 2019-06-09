@@ -1,5 +1,6 @@
 ﻿using System;
 using RedPet.Common.Models.Base;
+using RedPet.Common.Models.Pet;
 using RedPet.Common.Models.Product;
 using RedPet.Common.Models.Promotion;
 using RedPet.Common.Models.Service;
@@ -18,7 +19,8 @@ namespace RedPet.Common.Models.Booking
         public ServiceModel Service { get; set; }
         public ProductModel Product { get; set; }
         public PromotionModel Promotion { get; set; }
-        public CustomerModel User { get; set; }
+        public CustomerModel Customer { get; set; }
+        public PetModel Pet { get; set; }
         public StateModel State { get; set; }
     }
 
@@ -29,6 +31,8 @@ namespace RedPet.Common.Models.Booking
         public decimal TotalPrice { get; set; }
         public DateTime DeliveryDateTime { get; set; }
 
+        public int CustomerId { get; set; }
+        public int? PetId { get; set; }
         public int? ServiceId { get; set; }
         public int? ProductId { get; set; }
         public int? PromotionId { get; set; }

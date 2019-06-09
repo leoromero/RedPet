@@ -8,7 +8,6 @@ namespace RedPet.Database.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<PetSize> builder)
         {
-            builder.HasOne(x => x.WeightRange).WithMany();
         }
     }
 }

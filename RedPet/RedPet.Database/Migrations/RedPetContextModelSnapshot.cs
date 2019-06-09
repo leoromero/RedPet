@@ -19,10 +19,11 @@ namespace RedPet.Database.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -33,7 +34,7 @@ namespace RedPet.Database.Migrations
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256);
 
-                    b.Property<string>("UserId");
+                    b.Property<int?>("UserId");
 
                     b.HasKey("Id");
 
@@ -47,7 +48,7 @@ namespace RedPet.Database.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,8 +58,7 @@ namespace RedPet.Database.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired();
+                    b.Property<int>("RoleId");
 
                     b.HasKey("Id");
 
@@ -67,7 +67,7 @@ namespace RedPet.Database.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -77,8 +77,7 @@ namespace RedPet.Database.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -87,7 +86,7 @@ namespace RedPet.Database.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -95,8 +94,7 @@ namespace RedPet.Database.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<int>("UserId");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -105,11 +103,11 @@ namespace RedPet.Database.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<int>("UserId");
 
-                    b.Property<string>("RoleId");
+                    b.Property<int>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -118,9 +116,9 @@ namespace RedPet.Database.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<int>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -178,6 +176,8 @@ namespace RedPet.Database.Migrations
 
                     b.Property<DateTime?>("InactivationDate");
 
+                    b.Property<int?>("PetId");
+
                     b.Property<decimal>("Price");
 
                     b.Property<int?>("ProductId");
@@ -195,6 +195,8 @@ namespace RedPet.Database.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("PetId");
 
                     b.HasIndex("ProductId");
 
@@ -244,13 +246,12 @@ namespace RedPet.Database.Migrations
 
                     b.Property<DateTime?>("InactivationDate");
 
-                    b.Property<string>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Customers");
                 });
@@ -274,13 +275,16 @@ namespace RedPet.Database.Migrations
 
             modelBuilder.Entity("RedPet.Database.Entities.Identity.User", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AccessFailedCount");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -292,6 +296,8 @@ namespace RedPet.Database.Migrations
                     b.Property<string>("FirstName");
 
                     b.Property<string>("Gender");
+
+                    b.Property<DateTime?>("InactivationDate");
 
                     b.Property<string>("LastName");
 
@@ -310,6 +316,8 @@ namespace RedPet.Database.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("RefreshToken");
 
                     b.Property<string>("SecurityStamp");
 
@@ -347,9 +355,9 @@ namespace RedPet.Database.Migrations
                         .IsRequired()
                         .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 1)));
 
-                    b.Property<int?>("HairTypeId");
-
                     b.Property<DateTime?>("InactivationDate");
+
+                    b.Property<int>("MealsPerDay");
 
                     b.Property<string>("Name");
 
@@ -359,7 +367,13 @@ namespace RedPet.Database.Migrations
 
                     b.Property<int?>("PetSizeId");
 
+                    b.Property<string>("PreferedFood");
+
                     b.Property<bool>("Sterilized");
+
+                    b.Property<bool>("VaccinesUpToDate");
+
+                    b.Property<int?>("VetId");
 
                     b.Property<int?>("WeightRangeId");
 
@@ -367,11 +381,11 @@ namespace RedPet.Database.Migrations
 
                     b.HasIndex("BreedId");
 
-                    b.HasIndex("HairTypeId");
-
                     b.HasIndex("OwnerId");
 
                     b.HasIndex("PetSizeId");
+
+                    b.HasIndex("VetId");
 
                     b.HasIndex("WeightRangeId");
 
@@ -390,7 +404,7 @@ namespace RedPet.Database.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("WeightRangeId");
+                    b.Property<int?>("WeightRangeId");
 
                     b.HasKey("Id");
 
@@ -511,13 +525,38 @@ namespace RedPet.Database.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("PetSizeId");
+
                     b.Property<decimal>("Price");
+
+                    b.Property<int>("ServiceTypeId");
 
                     b.Property<decimal>("Taxes");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PetSizeId");
+
+                    b.HasIndex("ServiceTypeId");
+
                     b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("RedPet.Database.Entities.ServiceType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime?>("InactivationDate");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServiceType");
                 });
 
             modelBuilder.Entity("RedPet.Database.Entities.State", b =>
@@ -537,6 +576,71 @@ namespace RedPet.Database.Migrations
                     b.ToTable("State");
                 });
 
+            modelBuilder.Entity("RedPet.Database.Entities.Vaccination", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime?>("InactivationDate");
+
+                    b.Property<int>("PetId");
+
+                    b.Property<int>("VaccineId");
+
+                    b.Property<DateTime>("VacinationDate");
+
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("PetId", "VaccineId");
+
+                    b.HasIndex("VaccineId");
+
+                    b.ToTable("Vaccination");
+                });
+
+            modelBuilder.Entity("RedPet.Database.Entities.Vaccine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime?>("InactivationDate");
+
+                    b.Property<string>("Info");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vaccine");
+                });
+
+            modelBuilder.Entity("RedPet.Database.Entities.Vet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime?>("InactivationDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Phone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vet");
+                });
+
             modelBuilder.Entity("RedPet.Database.Entities.WeightRange", b =>
                 {
                     b.Property<int>("Id")
@@ -549,6 +653,8 @@ namespace RedPet.Database.Migrations
 
                     b.Property<DateTime?>("InactivationDate");
 
+                    b.Property<string>("Name");
+
                     b.Property<int?>("To");
 
                     b.HasKey("Id");
@@ -556,22 +662,22 @@ namespace RedPet.Database.Migrations
                     b.ToTable("WeightRanges");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
                 {
                     b.HasOne("RedPet.Database.Entities.Identity.User")
                         .WithMany("Roles")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.HasOne("RedPet.Database.Entities.Identity.User")
                         .WithMany()
@@ -579,7 +685,7 @@ namespace RedPet.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.HasOne("RedPet.Database.Entities.Identity.User")
                         .WithMany()
@@ -587,9 +693,9 @@ namespace RedPet.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -600,7 +706,7 @@ namespace RedPet.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.HasOne("RedPet.Database.Entities.Identity.User")
                         .WithMany()
@@ -629,6 +735,11 @@ namespace RedPet.Database.Migrations
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("RedPet.Database.Entities.Pet", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("RedPet.Database.Entities.Product", "Product")
                         .WithMany()
@@ -663,7 +774,8 @@ namespace RedPet.Database.Migrations
                 {
                     b.HasOne("RedPet.Database.Entities.Identity.User", "User")
                         .WithOne()
-                        .HasForeignKey("RedPet.Database.Entities.Customer", "UserId");
+                        .HasForeignKey("RedPet.Database.Entities.Customer", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("RedPet.Database.Entities.Pet", b =>
@@ -671,10 +783,6 @@ namespace RedPet.Database.Migrations
                     b.HasOne("RedPet.Database.Entities.Breed", "Breed")
                         .WithMany()
                         .HasForeignKey("BreedId");
-
-                    b.HasOne("RedPet.Database.Entities.HairType", "HairType")
-                        .WithMany()
-                        .HasForeignKey("HairTypeId");
 
                     b.HasOne("RedPet.Database.Entities.Customer", "Owner")
                         .WithMany("Pets")
@@ -685,6 +793,10 @@ namespace RedPet.Database.Migrations
                         .WithMany()
                         .HasForeignKey("PetSizeId");
 
+                    b.HasOne("RedPet.Database.Entities.Vet", "Vet")
+                        .WithMany()
+                        .HasForeignKey("VetId");
+
                     b.HasOne("RedPet.Database.Entities.WeightRange", "WeightRange")
                         .WithMany()
                         .HasForeignKey("WeightRangeId");
@@ -694,8 +806,7 @@ namespace RedPet.Database.Migrations
                 {
                     b.HasOne("RedPet.Database.Entities.WeightRange", "WeightRange")
                         .WithMany()
-                        .HasForeignKey("WeightRangeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("WeightRangeId");
                 });
 
             modelBuilder.Entity("RedPet.Database.Entities.Promotion", b =>
@@ -729,6 +840,31 @@ namespace RedPet.Database.Migrations
                     b.HasOne("RedPet.Database.Entities.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("RedPet.Database.Entities.Service", b =>
+                {
+                    b.HasOne("RedPet.Database.Entities.PetSize", "PetSize")
+                        .WithMany()
+                        .HasForeignKey("PetSizeId");
+
+                    b.HasOne("RedPet.Database.Entities.ServiceType", "Type")
+                        .WithMany()
+                        .HasForeignKey("ServiceTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("RedPet.Database.Entities.Vaccination", b =>
+                {
+                    b.HasOne("RedPet.Database.Entities.Pet", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("RedPet.Database.Entities.Vaccine", "Vaccine")
+                        .WithMany()
+                        .HasForeignKey("VaccineId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

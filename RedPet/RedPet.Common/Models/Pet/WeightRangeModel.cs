@@ -7,5 +7,6 @@ namespace RedPet.Common.Models.Pet
         public int? From { get; set; }
         public int? To { get; set; }
         public int? Id { get; set; }
+        public string Name { get; set; }
     }
 }

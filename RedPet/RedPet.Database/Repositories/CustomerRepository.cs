@@ -16,9 +16,8 @@ namespace RedPet.Database.Repositories
         {
             return await DbSet.Include(x => x.User)
                               .Include(x => x.Pets).ThenInclude(x => x.Breed)
-                              .Include(x => x.Pets).ThenInclude(x=>x.PetSize)
-                              .Include(x => x.Pets).ThenInclude(x=>x.HairType)
-                              .Include(x => x.Pets).ThenInclude(x=>x.WeightRange)
+                              .Include(x => x.Pets).ThenInclude(x => x.PetSize)
+                              .Include(x => x.Pets).ThenInclude(x => x.WeightRange)
                               .FirstOrDefaultAsync(x => x.Id == id);
         }
 
@@ -27,14 +26,17 @@ namespace RedPet.Database.Repositories
             return DbSet.Include(x => x.User)
                               .Include(x => x.Pets).ThenInclude(x => x.Breed)
                               .Include(x => x.Pets).ThenInclude(x => x.PetSize)
-                              .Include(x => x.Pets).ThenInclude(x => x.HairType)
                               .Include(x => x.Pets).ThenInclude(x => x.WeightRange)
                               .SingleOrDefaultAsync(x => x.User.Email == email);
         }
 
-        public async Task<IEnumerable<Pet>> GetPetsAsync(string userName)
+        public async Task<IEnumerable<Pet>> GetPetsAsync(int userId)
         {
-            var customer = await DbSet.Include(x => x.Pets).FirstOrDefaultAsync(x => x.User.UserName == userName);
+            var customer = await DbSet
+                .Include(x => x.Pets).ThenInclude(x => x.Breed)
+                .Include(x => x.Pets).ThenInclude(x => x.PetSize)
+                .Include(x => x.Pets).ThenInclude(x => x.WeightRange)
+                .FirstOrDefaultAsync(x => x.User.Id == userId);
             return customer.Pets.ToList();
         }
     }
@@ -42,6 +44,6 @@ namespace RedPet.Database.Repositories
     public interface ICustomerRepository : IRepository<Customer>
     {
         Task<Customer> GetByEmailAsync(string email);
-        Task<IEnumerable<Pet>> GetPetsAsync(string userName);
+        Task<IEnumerable<Pet>> GetPetsAsync(int userId);
     }
 }
