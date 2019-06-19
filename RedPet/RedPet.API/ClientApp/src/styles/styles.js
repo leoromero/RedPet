@@ -19,6 +19,7 @@ const styles = makeStyles(theme => ({
     flex: 1
   },
   mainAuthenticated: {
+    display:'flex',
     flexGrow: 1,
     [theme.breakpoints.up('md')]: {
       width: 'calc(100% - 240px)',
@@ -26,7 +27,11 @@ const styles = makeStyles(theme => ({
     },
   },
   content: {
+    flex:1,
     padding: theme.spacing(3)
+  },
+  contentWithoutPadding: {
+    flex:1,
   },
   fab: {
     position: 'absolute',

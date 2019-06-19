@@ -1,11 +1,10 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { Grid, Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import styles from '../../styles/styles';
 import { AuthContext } from '../../contexts/AuthContext';
 import Api from '../../helpers/Api';
 import useApi from '../../Hooks/useApi';
 import { MessageContext } from '../../contexts/MessageContext';
-import AlertDialogSlide from '../Common/AlertDialogSlide';
 import useOpen from '../../Hooks/useOpen';
 import NoPetsDialog from './NoPetsDialog';
 
@@ -19,7 +18,7 @@ const HomePage = (props) => {
   useEffect(() => {
     const apiCall = async () => {
       const apiResponse = await useApi(Api.customers.pets(user.id), showMessage);
-
+debugger;
       if (apiResponse.ok) {
         apiResponse.result.length > 0 ?
           setPets(apiResponse.result)

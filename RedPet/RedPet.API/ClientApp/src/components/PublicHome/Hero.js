@@ -9,9 +9,9 @@ const Hero = (props) => {
         <Grid container className={classes.hero} >
             <Grid container className={classes.content}>
                 <Grid container direction="column" alignItems="center" item xs={12} sm={6}>
-                    <Typography variant="h5" color="textPrimary">Bienvenido a RedPet</Typography>
-                    <Typography variant="h5" color="textPrimary">La red de servicios para mascoras</Typography>
-                    <Typography variant="h5" color="textPrimary">mas grande de Ecuador</Typography>
+                    <Typography variant="h5" className={classes.whiteText}>Bienvenido a RedPet</Typography>
+                    <Typography variant="h5" className={classes.whiteText}>La red de servicios para mascoras</Typography>
+                    <Typography variant="h5" className={classes.whiteText}>mas grande de Ecuador</Typography>
                 </Grid>
                 <Grid container direction="column" alignItems="center" justify="center" item xs={12} sm={6}>
                     <Typography variant="h5">Imagen</Typography>
@@ -19,9 +19,9 @@ const Hero = (props) => {
                 <Grid container direction="column" alignItems="center" item xs={12} sm={6}>
                     <Button variant="contained" component={Link} to='/login' size="large" color="secondary">Inicia sesión</Button>
                     <Grid container item direction="row" justify="center" alignItems="center">
-                        <Typography variant="subtitle1" align="center">Ó </Typography>
+                        <Typography variant="subtitle1" align="center"  className={classes.whiteText}>Ó </Typography>
                         <Button component={Link} to='/register' variant="text" color="secondary">Registrate</Button>
-                        <Typography variant="subtitle1">, es gratis! </Typography>
+                        <Typography variant="subtitle1"  className={classes.whiteText}>, es gratis! </Typography>
                     </Grid>
                 </Grid>
             </Grid>

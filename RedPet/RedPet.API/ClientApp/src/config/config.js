@@ -1,4 +1,4 @@
-let apiBaseURL = "https://localhost:44360/api/";
+let apiBaseURL = "http://localhost:51445/api/";
 export default {
     apiURLs:{
         login: apiBaseURL+"Auth",

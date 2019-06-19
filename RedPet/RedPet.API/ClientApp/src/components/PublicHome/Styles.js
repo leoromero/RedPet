@@ -25,6 +25,9 @@ const Styles = makeStyles(theme => ({
         paddingLeft: theme.spacing(5),
         paddingRight: theme.spacing(5),
         ...theme.mixins.toolbar
+    },
+    whiteText:{
+        color:"#fff"
     }
 }))
 

@@ -24,7 +24,7 @@ const PetForm = (props) => {
         const apiResponse = await useApi(Api.pets.getById(props.petId), showMessage);
 
         if (apiResponse.ok) {
-            setPet(apiResponse.result);
+          setPet(apiResponse.result);
         }
       };
 
@@ -84,6 +84,7 @@ const PetForm = (props) => {
 
         <Grid item className={classes.formControl}>
           <Button
+            variant='contained'
             disabled={activeStep === 0}
             onClick={handleBack}
           >
@@ -93,7 +94,7 @@ const PetForm = (props) => {
             type='submit'
             form={'step-' + activeStep + '-form'}
             variant="contained"
-            color="primary"
+            color="secondary"
           >
             {activeStep === getLastStep() ? 'Finish' : 'Next'}
           </Button>

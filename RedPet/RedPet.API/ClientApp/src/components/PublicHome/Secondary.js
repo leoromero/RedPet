@@ -7,8 +7,8 @@ const Secondary = (props) => {
     return (
         <Grid container className={classes.secondary}>
             <Grid container justify="center" item className={classes.content}>
-                <Typography color="textSecondary" variant="h4" align="center" >Todo lo que tu mascota necesita en un solo lugar. </Typography>
-                <Typography color="textSecondary" variant="h4" align="center" >Guardería, hospedaje, peluquería, alimento, y mucho mas... </Typography>
+                <Typography variant="h4" align="center" >Todo lo que tu mascota necesita en un solo lugar. </Typography>
+                <Typography variant="h4" align="center" >Guardería, hospedaje, peluquería, alimento, y mucho mas... </Typography>
             </Grid>
         </Grid>
     );

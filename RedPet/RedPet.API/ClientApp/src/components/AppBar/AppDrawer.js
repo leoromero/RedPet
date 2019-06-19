@@ -48,11 +48,11 @@ const AppDrawer = props => {
 
   const drawer = (
     <>
-      <div className={classes.toolbar} />
+    <div className={classes.toolbar} />
       <MenuList>
         <Hidden mdUp>
           <MenuItem component={Link} button>
-            <ListItemIcon> <AccountCircle /></ListItemIcon>
+            <ListItemIcon > <AccountCircle /></ListItemIcon>
             <ListItemText primary='Perfil' />
           </MenuItem>
           <MenuItem component={Link} button>
@@ -79,7 +79,7 @@ const AppDrawer = props => {
               <ListItemIcon>
                 <Store />
               </ListItemIcon>
-              <ListItemText inset primary="Servicios" />
+              <ListItemText primary="Servicios" />
               {isServicesOpen ? <ExpandLess /> : <ExpandMore />}
             </MenuItem>
             <Collapse in={isServicesOpen} timeout="auto" unmountOnExit>
@@ -115,9 +115,9 @@ const AppDrawer = props => {
     </>
   );
   return (
-    <div className={classes.appBar}>
+    <div className={classes.toolbar}>
       <CssBaseline />
-      <AppBar position="fixed">
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton component={Link} to='/'>
             <RedPetIcon />

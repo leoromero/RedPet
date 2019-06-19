@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
 import { AuthContext } from '../../contexts/AuthContext';
+import { withRouter } from 'react-router-dom';
 
 const UserMenu = (props) => {
 
@@ -9,6 +10,7 @@ const UserMenu = (props) => {
   const signOut = () => {
     logout();
     props.onClose();
+    props.history.push("/");
   };
   return (
     <Menu
@@ -26,4 +28,4 @@ const UserMenu = (props) => {
   );
 }
 
-export default UserMenu;
+export default withRouter(UserMenu);

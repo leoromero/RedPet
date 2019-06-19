@@ -7,6 +7,7 @@ import { IconButton, Button, Hidden } from '@material-ui/core';
 import { RedPetIcon } from '../icons/RedPetIcon';
 import { Link } from 'react-router-dom';
 import Styles from './Styles';
+import { withRouter } from 'react-router-dom';
 
 const AppDrawer = props => {
 
@@ -18,7 +19,7 @@ const AppDrawer = props => {
     const element = document.getElementById(event.currentTarget.name)
     element.scrollIntoView({behavior:'smooth'});
   };
-
+  
   return (
     <div className={classes.appBar}>
       <CssBaseline />
@@ -32,18 +33,20 @@ const AppDrawer = props => {
               RedPet
               </Typography>
             <div className={classes.grow} />
-            <Button name="services" variant="text" component={Link} to='/#services' color={activeLink == 'services'? "secondary" : "default"} onClick={handleLinkClick} > Servicios </Button>
+            <Button name="services" variant="text" component={Link} to='/#services' color={activeLink == 'services'? "secondary" : "secondary"}  onClick={handleLinkClick} > Servicios </Button>
             <div className={classes.grow} />
-            <Button name="workWithUs" variant="text" component={Link} to='/register/Provider' > Trabaja con RedPet </Button>
+            <Button name="workWithUs" variant="text" component={Link} to='/register/Provider' color='secondary'> Trabaja con RedPet </Button>
 
           </Hidden>
           <div className={classes.grow} />
-          <Button component={Link} to='/login'>Iniciar Sesión</Button>
-
+          {
+            props.location.pathname !== '/login' &&
+            <Button variant='contained' color='secondary' component={Link} to='/login'>Iniciar Sesión</Button>
+          }
         </Toolbar>
       </AppBar>
     </div>
   );
 }
 
-export default AppDrawer;
+export default withRouter(AppDrawer);

@@ -14,10 +14,10 @@ const NoPetsDialog = (props) => {
 
   const actions =
     <div>
-      <Button onClick={handleCancel} color="primary">
+      <Button onClick={handleCancel} variant='contained' color="default">
         Cancelar
             </Button>
-      <Button onClick={handleOk} color="primary">
+      <Button onClick={handleOk} variant='contained' color="secondary">
         Aceptar
             </Button>
     </div>
@@ -26,7 +26,7 @@ const NoPetsDialog = (props) => {
     <AlertDialogSlide isOpen={props.isOpen} toggle={props.toggle}
       title="Bienvenido a RedPet"
       content="Todavia no registro ninguna mascota, ¿Quiere ir a registrarlas ahora?"
-      actions={actions} />
+      actions={actions}></AlertDialogSlide>
   );
 
 }

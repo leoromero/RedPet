@@ -24,36 +24,35 @@ const Router = (props) => {
             :
             <PublicAppDrawer />
         }
-        <main className={!authenticated && classes.main}>
-          <Switch>
-
-            {
-              !authenticated ? (
-                <>
-                  <Route exact path="/" component={PublicHome} />
-                  <Route path="/login" component={LoginPage} />
-                  <Route exact path="/register/" component={RegisterPage} />
-                  <Route path="/register/:role" component={RegisterPage} />
-                </>
-              ) :
-                (
-                  <div className={classes.mainAuthenticated}>
-                    <div className={classes.content}>
+        <main className={!authenticated ? classes.main : classes.mainAuthenticated}>
+          <div className={!authenticated ? classes.contentWithoutPadding : classes.content}>
+            <Switch>
+              {
+                !authenticated ? (
+                  <>
+                    <Route exact path="/" component={PublicHome} />
+                    <Route path="/login" component={LoginPage} />
+                    <Route exact path="/register/" component={RegisterPage} />
+                    <Route path="/register/:role" component={RegisterPage} />
+                  </>
+                ) :
+                  (
+                    <>
                       <Route exact path="/" component={HomePage} />
                       <Route path="/pets" component={PetsPage} />
                       <Route path="/pet/new" component={PetPage} />
                       <Route path="/pet/:id" component={PetPage} />
-                    </div>
-                  </div>
-                )
-            }
-            {/* <Route path="/meals/:userId" component={Meals} /> */}
-            {/* <Route path="/meal/user/:userId" component={Meal} /> */}
-            {/* <Route path="/meal/:id" component={Meal} /> */}
-            {/* <Route path="/users" exact component={Users} /> */}
-            {/* <Route path="/users/:id" component={User} /> */}
+                    </>
+                  )
+              }
+              {/* <Route path="/meals/:userId" component={Meals} /> */}
+              {/* <Route path="/meal/user/:userId" component={Meal} /> */}
+              {/* <Route path="/meal/:id" component={Meal} /> */}
+              {/* <Route path="/users" exact component={Users} /> */}
+              {/* <Route path="/users/:id" component={User} /> */}
 
-          </Switch>
+            </Switch>
+          </div>
         </main>
       </>
     </AppRouter>

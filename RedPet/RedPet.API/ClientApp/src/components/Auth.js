@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { AuthProvider } from "../contexts/AuthContext";
 import AuthHelper from "../helpers/Auth";
-
+ 
 class Auth extends Component {
   state = {
     authenticated: false,

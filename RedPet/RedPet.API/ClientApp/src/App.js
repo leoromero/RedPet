@@ -23,28 +23,64 @@ const styles = {
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: grey[800],
+      main: "#424242",
     },
     secondary: {
-      main: pink[500]
+      main: "#e91e63"
     },
-    text: {
-      primary: "#fff",
-      secondary: "#000"
-    }
+    // text: {
+    //   primary: "#000",
+    //   secondary: "#fff"
+    // }
   },
-  overrides: {
-    MuiPaper: {
-      root: {
-        color: "#000"
-      },
-    },
-    MuiInput: {
-      root: {
-        color: "#000"
-      },
-    },
-  }
+  // overrides: {
+  //   MuiStepIcon: {
+  //     root: {
+  //       '&$active': {
+  //         color: pink[500]
+  //       },
+  //       '&$completed': {
+  //         color: pink[500]
+  //       },
+  //     }
+  //   },
+  //   MuiStepLabel: {
+  //     label: {
+  //       '&$active': {
+  //         color: pink[500]
+  //       },
+  //       '&$completed': {
+  //         color: pink[500]
+  //       },
+  //     },
+  //   },
+  //   MuiButton:{
+  //     textPrimary:{
+  //       color:"#fff"
+  //     }
+  //   },
+  //   MuiIconButton: {
+  //     root: {
+  //       color: "#fff"
+  //     }
+  //   },
+  //   MuiPaper: {
+  //     root: {
+  //       color: "#000"
+  //     },
+  //   },
+  //   MuiInput: {
+  //     root: {
+  //       color: "#000"
+  //     },
+  //   },
+  //   MuiFormLabel: {
+  //     root:{
+  //       color:"#000"
+  //     }
+  //   },
+    
+  // }
 });
 
 export default class App extends Component {
