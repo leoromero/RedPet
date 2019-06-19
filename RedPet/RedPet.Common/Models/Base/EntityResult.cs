@@ -17,5 +17,6 @@ namespace RedPet.Common.Models.Base
         }
 
         public T Entity { get; set; }
+        public int? StatusCode { get; set; }
     }
 }

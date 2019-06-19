@@ -4,6 +4,7 @@ export default {
         login: apiBaseURL+"Auth",
         fbkLogin: apiBaseURL+"ExternalAuth/facebook",
         customers: apiBaseURL + "Customers",
+        auth: apiBaseURL + "Auth",
         refreshToken: apiBaseURL + "Auth/Refresh",
         roles: apiBaseURL + "Roles",
         services: apiBaseURL + "Services",
@@ -12,5 +13,6 @@ export default {
         hairTypes: apiBaseURL + "HairTypes",
         weightRanges: apiBaseURL + "WeightRanges",
         breeds: apiBaseURL + "Breeds",
+        users: apiBaseURL + "Users",
     }
 };

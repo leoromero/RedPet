@@ -7,8 +7,8 @@ import { withRouter } from 'react-router-dom';
 const PetCard = (props) => {
   const styles = makeStyles(theme => ({
     fab: {
-      bottom: theme.spacing.unit,
-      right: theme.spacing.unit
+      bottom: theme.spacing(1),
+      right: theme.spacing(1)
     }
   }));
   const classes = styles();

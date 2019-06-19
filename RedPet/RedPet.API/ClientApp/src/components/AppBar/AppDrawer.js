@@ -115,9 +115,9 @@ const AppDrawer = props => {
     </>
   );
   return (
-    <div className={classes.root}>
+    <div className={classes.appBar}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton component={Link} to='/'>
             <RedPetIcon />

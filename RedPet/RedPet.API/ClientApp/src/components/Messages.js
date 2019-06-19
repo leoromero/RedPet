@@ -6,11 +6,11 @@ import { SnackbarProvider } from 'notistack';
 const Messages = (props) => {
    
     return (
-        <SnackbarProvider action={[
+        <SnackbarProvider action={ () =>
             <IconButton key="close" color="inherit">
               <Close />
-            </IconButton>,
-          ]}
+            </IconButton>
+        }
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'right',

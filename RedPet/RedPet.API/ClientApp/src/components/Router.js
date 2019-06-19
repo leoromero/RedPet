@@ -1,6 +1,7 @@
 import React, { Component, useContext } from "react";
 import { BrowserRouter as AppRouter, Route, Switch } from "react-router-dom";
 import LoginPage from "./Login/LoginPage";
+import RegisterPage from "./Register/RegisterPage";
 import PetPage from "./Pet/PetPage";
 import { AuthContext } from "../contexts/AuthContext";
 import HomePage from "./Home/HomePage";
@@ -23,35 +24,37 @@ const Router = (props) => {
             :
             <PublicAppDrawer />
         }
-        <Switch>
-          <main className={authenticated && classes.main}>
-            <div className={classes.toolbar}></div>
-            <div className={authenticated && classes.content}>
-              {
-                !authenticated ? (
-                  <>
-                    <Route exact path="/" component={PublicHome} />
-                    <Route path="/login" component={LoginPage} />
-                  </>
-                ) :
-                  (
-                    <>
+        <main className={!authenticated && classes.main}>
+          <Switch>
+
+            {
+              !authenticated ? (
+                <>
+                  <Route exact path="/" component={PublicHome} />
+                  <Route path="/login" component={LoginPage} />
+                  <Route exact path="/register/" component={RegisterPage} />
+                  <Route path="/register/:role" component={RegisterPage} />
+                </>
+              ) :
+                (
+                  <div className={classes.mainAuthenticated}>
+                    <div className={classes.content}>
                       <Route exact path="/" component={HomePage} />
                       <Route path="/pets" component={PetsPage} />
                       <Route path="/pet/new" component={PetPage} />
                       <Route path="/pet/:id" component={PetPage} />
-                    </>
-                  )
-              }
-              {/* <Route path="/meals/:userId" component={Meals} /> */}
-              {/* <Route path="/meal/user/:userId" component={Meal} /> */}
-              {/* <Route path="/meal/:id" component={Meal} /> */}
-              {/* <Route path="/users" exact component={Users} /> */}
-              {/* <Route path="/users/:id" component={User} /> */}
+                    </div>
+                  </div>
+                )
+            }
+            {/* <Route path="/meals/:userId" component={Meals} /> */}
+            {/* <Route path="/meal/user/:userId" component={Meal} /> */}
+            {/* <Route path="/meal/:id" component={Meal} /> */}
+            {/* <Route path="/users" exact component={Users} /> */}
+            {/* <Route path="/users/:id" component={User} /> */}
 
-            </div>
-          </main>
-        </Switch>
+          </Switch>
+        </main>
       </>
     </AppRouter>
   );

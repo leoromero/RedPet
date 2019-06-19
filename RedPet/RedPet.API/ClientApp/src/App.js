@@ -14,30 +14,41 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 const styles = {
   rootPaper: {
-    height: '100%'
-  },
-  contentPaper: {
-    padding: 25,
-    height: '100%'
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1
   }
 }
 
 const theme = createMuiTheme({
   palette: {
-    primary: {main:grey[800]},
-    secondary:{
-      main: pink[500],
-      contrastText: "#fff"
+    primary: {
+      main: grey[800],
     },
-    text:{
+    secondary: {
+      main: pink[500]
+    },
+    text: {
       primary: "#fff",
-      secondary: pink[500]
+      secondary: "#000"
     }
+  },
+  overrides: {
+    MuiPaper: {
+      root: {
+        color: "#000"
+      },
+    },
+    MuiInput: {
+      root: {
+        color: "#000"
+      },
+    },
   }
 });
 
 export default class App extends Component {
-  
+
   render() {
     return (
       <MuiPickersUtilsProvider utils={dateUtils} locale={esLocale}>

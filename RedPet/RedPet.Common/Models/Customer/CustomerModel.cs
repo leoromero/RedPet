@@ -4,7 +4,7 @@ using RedPet.Common.Models.Pet;
 
 namespace RedPet.Common.Models.User
 {
-    public class CustomerModel : IViewModel, ICreateModel, IUpdateModel
+    public class CustomerModel : IViewModel
     {
         public int Id { get; set; }
         public IList<PetModel> Pets { get; set; }
@@ -17,5 +17,17 @@ namespace RedPet.Common.Models.User
         public int UserId { get; set; }
 
         public string Name => $"{FirstName} {LastName}";
+    }
+
+    public class CustomerCreateUpdateModel : ICreateModel, IUpdateModel
+    {
+        public string Gender { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public long FacebookId { get; set; }
+        public string Email { get; set; }
+        public string UserName { get; set; }
+        public int UserId { get; set; }
+        public string Password { get; set; }
     }
 }

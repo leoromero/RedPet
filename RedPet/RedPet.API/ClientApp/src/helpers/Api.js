@@ -56,11 +56,12 @@ const refreshToken = async () => {
 
     return false;
 };
-const errorReturn = (errors) => {
-    if (errors) {
+const errorReturn = (response) => {
+    if (response && response.errors) {
         return {
+            status: response.status,
             ok: false,
-            errors: errors
+            errors: response.errors
         };
     }
 
@@ -98,7 +99,7 @@ export default {
                         result: jsonResponse
                     };
                 }
-                return errorReturn(jsonResponse.errors);
+                return errorReturn(jsonResponse);
             }
             catch{
                 return errorReturn();
@@ -118,7 +119,7 @@ export default {
                         result: jsonResponse
                     };
                 }
-                return errorReturn(jsonResponse.errors);
+                return errorReturn(jsonResponse);
             }
             catch{
                 return errorReturn();
@@ -139,7 +140,7 @@ export default {
                     };
                 }
 
-                return errorReturn(jsonResponse.errors);
+                return errorReturn(jsonResponse);
             }
             catch{
                 return errorReturn();
@@ -160,7 +161,7 @@ export default {
                     };
                 }
 
-                return errorReturn(jsonResponse.errors);
+                return errorReturn(jsonResponse);
             }
             catch{
                 return errorReturn();
@@ -185,7 +186,7 @@ export default {
                     refreshToken: jsonResponse.refreshToken
                 };
             }
-            return errorReturn(jsonResponse.errors);
+            return errorReturn(jsonResponse);
         }
         catch{
             return errorReturn();
@@ -213,7 +214,7 @@ export default {
                         };
                     }
 
-                    return errorReturn(jsonResponse.errors);
+                    return errorReturn(jsonResponse);
                 }
                 catch{
                     return errorReturn();
@@ -239,19 +240,71 @@ export default {
                 };
             }
 
-            return errorReturn(jsonResponse.errors);
+            return errorReturn(jsonResponse);
         }
         catch{
             return errorReturn();
+        }
+    },
+    users: {
+        validateEmail: async (email) => {
+            let response = await makeApiCall(Config.apiURLs.users + '/email/' + email, "get");
+
+            try {
+                if (!response) {
+                    return errorReturn();
+                }
+
+                let jsonResponse = await response.json();
+                debugger;
+                if (response.ok) {
+                    return {
+                        ok: true,
+                        status: response.status,
+                        result: {
+                            email: jsonResponse
+                        }
+                    };
+                }
+                return errorReturn(jsonResponse);
+            }
+            catch{
+                return errorReturn();
+            }
+        },
+        create: async (user) => {
+            let body = JSON.stringify({ "email": user.email, "password": user.password, "firstName": user.name, "lastName": user.lastName, "gender": user.gender, "role": user.role });
+
+            let response = await makeApiCall(Config.apiURLs.users, "post", body);
+
+            try {
+                if (!response) {
+                    return errorReturn();
+                }
+
+                let jsonResponse = await response.json();
+                if (response.ok) {
+                    return {
+                        ok: true,
+                        result: {
+                            id: jsonResponse
+                        }
+                    };
+                }
+                return errorReturn(jsonResponse);
+            }
+            catch{
+                return errorReturn();
+            }
         }
     },
     customers: {
         pets: async (userid) => {
             let response = await makeApiCall(Config.apiURLs.customers + '/' + userid + '/pets', "get");
             try {
-                // if (!response) {
-                //     return errorReturn();
-                // }
+                if (!response) {
+                    return errorReturn();
+                }
                 let jsonResponse = await response.json();
                 if (response.ok) {
                     console.log(jsonResponse);
@@ -262,29 +315,31 @@ export default {
                 }
 
 
-                return errorReturn(jsonResponse.errors);
+                return errorReturn(jsonResponse);
             }
             catch{
                 return errorReturn();
             }
         },
-        create: async (username, password, firstname, lastname, roleid) => {
-            let body = JSON.stringify({ "username": username, "password": password, "firstname": firstname, "lastname": lastname, "roleid": roleid ? roleid : 0 });
+        create: async (user) => {
+            let body = JSON.stringify({ "email": user.email, "password": user.password, "firstName": user.name, "lastName": user.lastName, "gender": user.gender, "role": user.role });
             let response = await makeApiCall(Config.apiURLs.customers, "post", body);
 
             try {
                 if (!response) {
                     return errorReturn();
                 }
+
                 let jsonResponse = await response.json();
                 if (response.ok) {
-                    console.log(jsonResponse);
                     return {
-                        ok: true
+                        ok: true,
+                        result: {
+                            id: jsonResponse
+                        }
                     };
                 }
-
-                return errorReturn(jsonResponse.errors);
+                return errorReturn(jsonResponse);
             }
             catch{
                 return errorReturn();
@@ -306,7 +361,7 @@ export default {
                     };
                 }
 
-                return errorReturn(jsonResponse.errors);
+                return errorReturn(jsonResponse);
             }
             catch{
                 return errorReturn();
@@ -328,7 +383,7 @@ export default {
                     };
                 }
 
-                return errorReturn(jsonResponse.errors);
+                return errorReturn(jsonResponse);
             }
             catch{
                 return errorReturn();
@@ -350,7 +405,7 @@ export default {
                     };
                 }
 
-                return errorReturn(jsonResponse.errors);
+                return errorReturn(jsonResponse);
             }
             catch{
                 return errorReturn();
@@ -375,6 +430,32 @@ export default {
                 return errorReturn();
             }
         }
+    },
+    providers: {
+        create: async (user) => {
+            let body = JSON.stringify({ "email": user.email, "password": user.password, "firstName": user.name, "lastName": user.lastName, "gender": user.gender, "role": user.role });
+            let response = await makeApiCall(Config.apiURLs.customers, "post", body);
+
+            try {
+                if (!response) {
+                    return errorReturn();
+                }
+
+                let jsonResponse = await response.json();
+                if (response.ok) {
+                    return {
+                        ok: true,
+                        result: {
+                            id: jsonResponse
+                        }
+                    };
+                }
+                return errorReturn(jsonResponse);
+            }
+            catch{
+                return errorReturn();
+            }
+        },
     },
     pets: {
         create: async (pet) => {
@@ -505,7 +586,7 @@ export default {
         }
 
     },
-    services:{
+    services: {
         read: async () => {
             let response = await makeApiCall(Config.apiURLs.services, "get");
 
@@ -522,7 +603,7 @@ export default {
                     };
                 }
 
-                return errorReturn(jsonResponse.errors);
+                return errorReturn(jsonResponse);
             }
             catch{
                 return errorReturn();

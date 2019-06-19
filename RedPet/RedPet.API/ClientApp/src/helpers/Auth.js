@@ -2,7 +2,7 @@ import jsonwebtoken from 'jsonwebtoken';
 import Api from "./Api";
 import { storeData, retrieveData, clear } from "./Storage";
 
-const storeTokens= (accessToken, refreshToken)=>{
+const storeTokens = (accessToken, refreshToken) => {
     storeData("accessToken", accessToken);
     storeData("refreshToken", refreshToken);
 };
@@ -22,10 +22,10 @@ const getUserFromToken = (token) => {
 export default {
     retrieveAccessToken: () => {
         return retrieveData("accessToken");
-    }, 
+    },
     retrieveRefreshToken: () => {
         return retrieveData("refreshToken");
-    }, 
+    },
     retrieveUser: () => {
         let user = retrieveData("user");
         return JSON.parse(user);
@@ -33,8 +33,7 @@ export default {
     login: async (username, password) => {
         let response = await Api.login(username, password);
         console.log(response);
-        if(response.ok)
-        {
+        if (response.ok) {
             storeTokens(response.accessToken, response.refreshToken);
             let user = getUserFromToken(response.accessToken);
             storeUser(user);
@@ -42,20 +41,20 @@ export default {
                 ok: true,
                 accessToken: response.accessToken,
                 refreshToken: response.refreshToken,
-                user    
+                user
             };
         }
 
         return {
-            ok:false,
+            ok: false,
+            status: response.status,
             errors: response.errors
         }
     },
     loginWithFacebook: async (accessToken) => {
         let response = await Api.externalAuth().facebook(accessToken);
         console.log(response);
-        if(response.ok)
-        {
+        if (response.ok) {
             storeTokens(response.result.accessToken, response.result.refreshToken);
             let user = getUserFromToken(response.result.accessToken);
             storeUser(user);
@@ -63,12 +62,12 @@ export default {
                 ok: true,
                 accessToken: response.result.accessToken,
                 refreshToken: response.result.refreshToken,
-                user    
+                user
             };
         }
 
         return {
-            ok:false,
+            ok: false,
             errors: response.errors
         }
     },

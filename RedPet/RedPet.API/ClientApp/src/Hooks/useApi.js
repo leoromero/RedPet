@@ -3,13 +3,17 @@ import { MessageContext } from '../contexts/MessageContext';
 
 const useApi = async (apiCall, showMessage) => {
     const apiResponse = await apiCall;
-    if(!apiResponse.ok){
-        showMessage('Se produjo un error intentando conectar al servidor. Intente de nuevo mas tarde.', 'error');
-    }
-    const ok = apiResponse.ok;
-    const result = apiResponse.result;
     
-    return {ok, result};
+    const ok = apiResponse.ok;
+
+    if (!ok) {
+        if (apiResponse.status === 500) {
+            const message = 'Se produjo un error intentando conectar al servidor. Intente de nuevo mas tarde.';
+            showMessage(message, 'error');
+        }
+    }
+
+    return apiResponse;
 }
 
 export default useApi;

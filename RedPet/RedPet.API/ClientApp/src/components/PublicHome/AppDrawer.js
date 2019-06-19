@@ -1,32 +1,30 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { IconButton, Button, Hidden } from '@material-ui/core';
 import { RedPetIcon } from '../icons/RedPetIcon';
-import { AuthContext } from '../../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import Styles from './Styles';
-import { useTheme } from '@material-ui/styles';
 
 const AppDrawer = props => {
 
   const classes = Styles();
-  const { authenticated, user } = useContext(AuthContext)
   const [ activeLink, setActiveLink ] = useState();
-  const theme = useTheme();
 
   const handleLinkClick = event => {
-    setActiveLink(event.currentTarget.id);
+    setActiveLink(event.currentTarget.name);
+    const element = document.getElementById(event.currentTarget.name)
+    element.scrollIntoView({behavior:'smooth'});
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.appBar}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="fixed">
         <Toolbar>
-          <IconButton component={Link} to='/' onClick={handleLinkClick}>
+          <IconButton name="root" component={Link} to='/' onClick={handleLinkClick}>
             <RedPetIcon />
           </IconButton>
           <Hidden smDown>
@@ -34,7 +32,9 @@ const AppDrawer = props => {
               RedPet
               </Typography>
             <div className={classes.grow} />
-            <Button id="services" variant="text" component={Link} to='/#services' color={activeLink == 'services'? "secondary" : "default"} onClick={handleLinkClick} > Servicios </Button>
+            <Button name="services" variant="text" component={Link} to='/#services' color={activeLink == 'services'? "secondary" : "default"} onClick={handleLinkClick} > Servicios </Button>
+            <div className={classes.grow} />
+            <Button name="workWithUs" variant="text" component={Link} to='/register/Provider' > Trabaja con RedPet </Button>
 
           </Hidden>
           <div className={classes.grow} />

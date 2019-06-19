@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,18 +22,27 @@ namespace RedPetAPI.Controllers
             this.customerService = customerService;
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult<int>> Post([FromBody] CustomerCreateUpdateModel model)
+        {
+            var result = await customerService.CreateAsync(model);
+
+            return result.ConvertToActionResult(HttpStatusCode.Created);
+        }
+
         [HttpGet]
         public async Task<ActionResult<List<CustomerModel>>> GetAsync()
         {
             var result = await customerService.GetAsync();
-            return result.ConvertToActionResult(System.Net.HttpStatusCode.OK);
+            return result.ConvertToActionResult(HttpStatusCode.OK);
         }
 
         [HttpGet("{userName}")]
         public async Task<ActionResult<CustomerModel>> GetAsync(string userName)
         {
             var result = await customerService.GetByEmailAsync(userName);
-            return result.ConvertToActionResult(System.Net.HttpStatusCode.OK);
+            return result.ConvertToActionResult(HttpStatusCode.OK);
         }
 
         [HttpGet("{userId}/Pets")]
@@ -44,7 +54,7 @@ namespace RedPetAPI.Controllers
                 return BadRequest();
 
             var result = await customerService.GetPetsAsync(userId);
-            return result.ConvertToActionResult(System.Net.HttpStatusCode.OK);
+            return result.ConvertToActionResult(HttpStatusCode.OK);
         }
     }
 }

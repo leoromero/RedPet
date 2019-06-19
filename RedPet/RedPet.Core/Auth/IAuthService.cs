@@ -11,5 +11,6 @@ namespace RedPet.Core.Auth
     {
         Task<EntityResult<JwtModel>> GenerateJwtFromFacebookAsync(FacebookAuthViewModel model);
         Task<EntityResult<JwtModel>> RefreshTokenAsync(RefreshTokenModel model);
+        Task<EntityResult<JwtModel>> LoginAsync(LoginModel model);
     }
 }

@@ -7,7 +7,6 @@ using RedPet.Common.Models.Service;
 using RedPet.Common.Models.User;
 using RedPet.Database.Entities;
 using RedPet.Database.Entities.Identity;
-using System.Linq;
 
 namespace RedPet.API.Infrastructure.Automapper
 {
@@ -26,8 +25,15 @@ namespace RedPet.API.Infrastructure.Automapper
                 .ForMember(x => x.User, opts => opts.Ignore());
             CreateMap<CustomerModel, User>();
 
-            CreateMap<UserModel, User>().ReverseMap();
+            CreateMap<CustomerCreateUpdateModel, Customer>().ReverseMap();
+            CreateMap<CustomerCreateUpdateModel, User>().ReverseMap();
+            CreateMap<UserCreateUpdateModel, CustomerCreateUpdateModel>().ReverseMap()
+            .ForMember(dest => dest.UserName, opts => opts.MapFrom(src => src.UserName ?? src.Email));
 
+            CreateMap<UserModel, User>().ReverseMap();
+            CreateMap<UserCreateUpdateModel, User>().ReverseMap()
+                .ForMember(dest => dest.UserName, opts => opts.MapFrom(src => src.UserName ?? src.Email));
+                
             CreateMap<Pet, PetModel>().ReverseMap();
             CreateMap<Pet, PetCreateUpdateModel>().ReverseMap();
 

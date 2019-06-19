@@ -66,7 +66,16 @@ namespace RedPetAPI
                 o.UseSqlServer(connectionString));
 
             services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<RedPetContext>();
-
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Default Password settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 0;
+            });
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
             SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtAppSettingOptions[nameof(JwtIssuerOptions.Secret)]));

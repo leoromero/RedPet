@@ -5,6 +5,9 @@ const Styles = makeStyles(theme => ({
         minHeight: 380,
         backgroundColor: theme.palette.primary.main
     },
+    secondary: {
+        minHeight: 170,
+    },
     content: {
         paddingLeft: theme.spacing(10),
         paddingRight: theme.spacing(10),
@@ -21,6 +24,7 @@ const Styles = makeStyles(theme => ({
         zIndex: theme.zIndex.drawer + 1,
         paddingLeft: theme.spacing(5),
         paddingRight: theme.spacing(5),
+        ...theme.mixins.toolbar
     }
 }))
 

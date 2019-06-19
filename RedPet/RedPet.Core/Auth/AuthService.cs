@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using RedPet.Common.Auth.Models;
@@ -6,6 +7,7 @@ using RedPet.Common.Extensions;
 using RedPet.Common.Models.Auth;
 using RedPet.Common.Models.Base;
 using RedPet.Common.Models.User;
+using RedPet.Database.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -24,15 +26,39 @@ namespace RedPet.Core.Auth
         private readonly ICustomerService customerService;
         private readonly IUserService userService;
         private readonly IFacebookClient facebookClient;
+        private readonly SignInManager<User> signInManager;
+        private readonly UserManager<User> userManager;
 
         public AuthService( IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions, 
-            ICustomerService customerService, IUserService userService, IFacebookClient facebookClient)
+            ICustomerService customerService, IUserService userService, IFacebookClient facebookClient, 
+            SignInManager<User> signInManager, UserManager<User> userManager)
         {
             this.jwtFactory = jwtFactory;
             this.jwtOptions = jwtOptions.Value;
             this.customerService = customerService;
             this.userService = userService;
             this.facebookClient = facebookClient;
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
+
+        public async Task<EntityResult<JwtModel>> LoginAsync(LoginModel model)
+        {
+            var result = new EntityResult<JwtModel>();
+            var loginResult = await signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
+
+            if (!loginResult.Succeeded)
+            {
+                result.AddError("usuario o contraseña incorrectos.", 403);
+                return result;
+            }
+
+            var user = await userManager.FindByEmailAsync(model.Username);
+            var refreshToken = await GenerateRefreshToken(model.Username);
+
+            result.Entity = GenerateJwt(jwtFactory.GenerateClaimsIdentity(user.UserName, user.Id, "Customer"), user.UserName, refreshToken);
+
+            return result;
         }
 
         public async Task<EntityResult<JwtModel>> GenerateJwtFromFacebookAsync(FacebookAuthViewModel model)
@@ -59,7 +85,7 @@ namespace RedPet.Core.Auth
 
             if (customer == null)
             {
-                var user = new CustomerModel
+                var user = new CustomerCreateUpdateModel
                 {
                     FirstName = userInfo.FirstName,
                     LastName = userInfo.LastName,

@@ -2,34 +2,43 @@ import { makeStyles } from '@material-ui/styles';
 
 const styles = makeStyles(theme => ({
   row: {
-    margin: theme.spacing.unit,
-    display: 'flex',
-    flexDirection: 'row'
+    margin: theme.spacing(1),
   },
 
   formControl: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     maxWidth: 195,
     width: 195
   },
   page: {
-    height: '100%'
+    flexGrow: 1,
+    minHeight: '100%'
   },
   main: {
+    display:'flex',
+    flex: 1
+  },
+  mainAuthenticated: {
     flexGrow: 1,
     [theme.breakpoints.up('md')]: {
       width: 'calc(100% - 240px)',
       marginLeft: '240px'
-    },    
+    },
   },
   content: {
-    padding: theme.spacing.unit * 3      
+    padding: theme.spacing(3)
   },
-  toolbar: theme.mixins.toolbar,
-  fab:{
-    position:'absolute',
-    bottom: theme.spacing.unit * 3,
-    right: theme.spacing.unit * 3 
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing(3),
+    right: theme.spacing(3)
+  },
+  circularProgress: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
   }
 }))
 

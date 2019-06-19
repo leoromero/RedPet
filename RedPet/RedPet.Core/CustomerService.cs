@@ -15,43 +15,33 @@ using RedPet.Database.Repositories;
 
 namespace RedPet.Core
 {
-    public class CustomerService : CrudService<Customer, CustomerModel>, ICustomerService
+    public class CustomerService : CrudService<Customer, CustomerModel, CustomerCreateUpdateModel>, ICustomerService
     {
         private readonly ICustomerRepository repository;
-        private readonly UserManager<User> userManager;
-        private readonly RoleManager<IdentityRole<int>> roleManager;
+        private readonly IUserService userService;
 
         public CustomerService(IUnitOfWork unitOfWork, IMapper mapper,
-            UserManager<User> userManager, RoleManager<IdentityRole<int>> roleManager)
+            IUserService userService)
             : base(unitOfWork, unitOfWork.GetRepository<ICustomerRepository>(), mapper)
         {
             repository = (ICustomerRepository)Repository;
-            this.userManager = userManager;
-            this.roleManager = roleManager;
+            this.userService = userService;
         }
 
-        public override async Task<EntityResult<int>> CreateAsync(CustomerModel model)
+        public override async Task<EntityResult<int>> CreateAsync(CustomerCreateUpdateModel model)
         {
-            var errorResult = new EntityResult<int>();
-            var user = Mapper.Map<User>(model);
-            var role = await roleManager.FindByNameAsync("Customer");
-            var identityResult = await userManager.CreateAsync(user);
-
-            if (!identityResult.Succeeded)
+            var result = new EntityResult<int>();
+            
+            var user = Mapper.Map<UserCreateUpdateModel>(model);
+            user.Role = "Customer";
+            result = await userService.CreateUserAsync(user);
+                        
+            if(!result.IsValid)
             {
-                identityResult.Errors.ToList().ForEach(e => errorResult.AddError($"{e.Code} - {e.Description}"));
-                return errorResult;
+                return result;
             }
 
-            identityResult = await userManager.AddToRoleAsync(user, role.Name);
-
-            if (!identityResult.Succeeded)
-            {
-                identityResult.Errors.ToList().ForEach(e => errorResult.AddError($"{e.Code} - {e.Description}"));
-                return errorResult;
-            }
-
-            model.UserId = user.Id;
+            model.UserId = result.Entity;
 
             return await base.CreateAsync(model);
         }
@@ -73,7 +63,7 @@ namespace RedPet.Core
         }
     }
 
-    public interface ICustomerService : ICrudService<Customer, CustomerModel>
+    public interface ICustomerService : ICrudService<Customer, CustomerModel, CustomerCreateUpdateModel>
     {
         Task<EntityResult<List<PetModel>>> GetPetsAsync(int userId);
         Task<EntityResult<CustomerModel>> GetByEmailAsync(string email);

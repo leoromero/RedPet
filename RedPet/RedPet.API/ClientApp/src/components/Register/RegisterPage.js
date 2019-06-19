@@ -1,19 +1,22 @@
 import React, { useContext } from 'react';
-import { Grid, Typography, Divider } from '@material-ui/core';
-import Login from './Login';
+import { Grid } from '@material-ui/core';
+import Register from './Register';
 import styles from '../../styles/styles';
 import { AuthContext } from '../../contexts/AuthContext';
 import { Redirect } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
-const LoginPage = (props) => {
+const RegisterPage = (props) => {
+
+    const role = props.match.params.role;
 
     const classes = styles();
     return (
         <Grid container justify='center' alignItems='center' className={classes.page}>
             <Grid item xs={8} md={6}>
-                <Login></Login>
+                <Register role={role}></Register>
             </Grid>
         </Grid>
     );
 }
-export default LoginPage;
+export default withRouter(RegisterPage);
