@@ -9,8 +9,10 @@ const Styles = makeStyles(theme => ({
         minHeight: 170,
     },
     content: {
-        paddingLeft: theme.spacing(10),
-        paddingRight: theme.spacing(10),
+        [theme.breakpoints.up('md')]: {
+            paddingLeft: theme.spacing(10),
+            paddingRight: theme.spacing(10),
+        },
         paddingTop: theme.spacing(3),
         paddingBottom: theme.spacing(3)
     },
@@ -22,12 +24,17 @@ const Styles = makeStyles(theme => ({
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
-        paddingLeft: theme.spacing(5),
-        paddingRight: theme.spacing(5),
+        [theme.breakpoints.up('md')]: {
+            paddingLeft: theme.spacing(5),
+            paddingRight: theme.spacing(5),
+        },
         ...theme.mixins.toolbar
     },
-    whiteText:{
-        color:"#fff"
+    whiteText: {
+        color: "#fff"
+    },
+    textAlignCenter:{
+        textAlign:"center"
     }
 }))
 

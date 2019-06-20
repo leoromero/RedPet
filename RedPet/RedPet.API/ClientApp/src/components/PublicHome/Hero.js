@@ -8,9 +8,9 @@ const Hero = (props) => {
     return (
         <Grid container className={classes.hero} >
             <Grid container className={classes.content}>
-                <Grid container direction="column" alignItems="center" item xs={12} sm={6}>
+                <Grid container direction="column" alignItems="center" alignContent="center" item xs={12} sm={6}>
                     <Typography variant="h5" className={classes.whiteText}>Bienvenido a RedPet</Typography>
-                    <Typography variant="h5" className={classes.whiteText}>La red de servicios para mascoras</Typography>
+                    <Typography variant="h5" className={`${classes.whiteText} ${classes.textAlignCenter}`}>La red de servicios para mascoras</Typography>
                     <Typography variant="h5" className={classes.whiteText}>mas grande de Ecuador</Typography>
                 </Grid>
                 <Grid container direction="column" alignItems="center" justify="center" item xs={12} sm={6}>

@@ -53,7 +53,7 @@ const Register = (props) => {
     <Card>
       <CardHeader
         titleTypographyProps={{ align: "center" }}
-        title='Nuevo Usuario'
+        title={'Nuevo ' + (props.role === "Provider" ? "Cuidador" : "Usuario")}
       />
       <CardContent>
         <Formik enableReinitialize

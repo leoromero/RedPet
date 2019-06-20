@@ -10,6 +10,7 @@ import PetsPage from "./Pet/PetsPage";
 import PublicHome from "./PublicHome/PublicHome";
 import PublicAppDrawer from "./PublicHome/AppDrawer";
 import AppDrawer from "./AppBar/AppDrawer";
+import { Grid } from "@material-ui/core";
 
 const Router = (props) => {
   const { authenticated } = useContext(AuthContext);
@@ -25,7 +26,7 @@ const Router = (props) => {
             <PublicAppDrawer />
         }
         <main className={!authenticated ? classes.main : classes.mainAuthenticated}>
-          <div className={!authenticated ? classes.contentWithoutPadding : classes.content}>
+          <Grid container item xs={12} className={!authenticated ? classes.contentWithoutPadding : classes.content}>
             <Switch>
               {
                 !authenticated ? (
@@ -52,7 +53,7 @@ const Router = (props) => {
               {/* <Route path="/users/:id" component={User} /> */}
 
             </Switch>
-          </div>
+          </Grid>
         </main>
       </>
     </AppRouter>
