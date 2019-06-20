@@ -160,7 +160,6 @@ const AppDrawer = props => {
           }
         </Toolbar>
       </AppBar>
-      {authenticated && (
         <>
           <Hidden smDown>
             <Drawer
@@ -188,7 +187,6 @@ const AppDrawer = props => {
             </Drawer>
           </Hidden>
         </>
-      )}
       <UserMenu
         open={isUserMenuOpen}
         onClose={handleUserMenuClose}

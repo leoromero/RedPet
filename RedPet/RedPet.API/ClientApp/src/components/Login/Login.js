@@ -28,9 +28,9 @@ const Login = (props) => {
     if (apiResponse.ok) {
       login(apiResponse.accessToken, apiResponse.refreshToken, apiResponse.user);
     }
-    else{
+    else {
       setLoading(false);
-      if(apiResponse.status === 403){
+      if (apiResponse.status === 403) {
         showMessage("Usuario o contraseña incorrectos", 'info');
       }
     }
@@ -43,8 +43,8 @@ const Login = (props) => {
         title='Iniciar Sesión'
       />
       <CardContent>
-      <Formik enableReinitialize
-      initialValues={{username:'', password:''}}
+        <Formik enableReinitialize
+          initialValues={{ username: '', password: '' }}
           validationSchema={loginValidation}
           onSubmit={submitForm}
           component={LoginForm} />
@@ -63,8 +63,8 @@ const Login = (props) => {
             </Grid>
             <Grid item>
               <Button color='secondary' variant='contained' type='submit' form="loginForm" >
-              {loading && <CircularProgress size={24} color='primary' className={classes.circularProgress} />}
-    Iniciar Sesión</Button>
+                {loading && <CircularProgress size={24} color='primary' className={classes.circularProgress} />}
+                Iniciar Sesión</Button>
             </Grid>
           </Grid>
           <Divider variant='middle'></Divider>

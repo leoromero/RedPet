@@ -28,12 +28,8 @@ const theme = createMuiTheme({
     secondary: {
       main: "#e91e63"
     },
-    // text: {
-    //   primary: "#000",
-    //   secondary: "#fff"
-    // }
   },
-  // overrides: {
+  overrides: {
   //   MuiStepIcon: {
   //     root: {
   //       '&$active': {
@@ -59,11 +55,11 @@ const theme = createMuiTheme({
   //       color:"#fff"
   //     }
   //   },
-  //   MuiIconButton: {
-  //     root: {
-  //       color: "#fff"
-  //     }
-  //   },
+    MuiIconButton: {
+      root: {
+        color: "#fff"
+      }
+    },
   //   MuiPaper: {
   //     root: {
   //       color: "#000"
@@ -80,7 +76,7 @@ const theme = createMuiTheme({
   //     }
   //   },
     
-  // }
+  }
 });
 
 export default class App extends Component {

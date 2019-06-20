@@ -13,7 +13,7 @@ const RegisterPage = (props) => {
     const classes = styles();
     return (
         <Grid container justify='center' alignItems='center' className={classes.page}>
-            <Grid item xs={8} md={6}>
+            <Grid item xs={12} md={6}>
                 <Register role={role}></Register>
             </Grid>
         </Grid>

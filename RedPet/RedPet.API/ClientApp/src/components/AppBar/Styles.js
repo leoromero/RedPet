@@ -10,8 +10,10 @@ const Styles = makeStyles(theme => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    paddingLeft: theme.spacing(5),
-    paddingRight: theme.spacing(5),
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: theme.spacing(5),
+      paddingRight: theme.spacing(5),
+    },
     ...theme.mixins.toolbar
   },
   drawer: {
@@ -26,7 +28,7 @@ const Styles = makeStyles(theme => ({
     padding: theme.spacing(3),
   },
   nested: { paddingLeft: theme.spacing(4) },
-  toolbar:{
+  toolbar: {
     ...theme.mixins.toolbar
   }
 }))

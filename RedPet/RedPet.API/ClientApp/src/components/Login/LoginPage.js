@@ -10,7 +10,7 @@ const LoginPage = (props) => {
     const classes = styles();
     return (
         <Grid container justify='center' alignItems='center' className={classes.page}>
-            <Grid item xs={8} md={6}>
+            <Grid item xs={12} md={6}>
                 <Login></Login>
             </Grid>
         </Grid>

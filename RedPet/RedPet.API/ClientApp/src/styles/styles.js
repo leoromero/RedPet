@@ -15,11 +15,11 @@ const styles = makeStyles(theme => ({
     minHeight: '100%'
   },
   main: {
-    display:'flex',
+    display: 'flex',
     flex: 1
   },
   mainAuthenticated: {
-    display:'flex',
+    display: 'flex',
     flexGrow: 1,
     [theme.breakpoints.up('md')]: {
       width: 'calc(100% - 240px)',
@@ -27,11 +27,13 @@ const styles = makeStyles(theme => ({
     },
   },
   content: {
-    flex:1,
-    padding: theme.spacing(3)
+    flex: 1,
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(3)
+    }
   },
   contentWithoutPadding: {
-    flex:1,
+    flex: 1,
   },
   fab: {
     position: 'absolute',

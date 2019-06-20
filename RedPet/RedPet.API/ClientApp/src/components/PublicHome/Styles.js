@@ -28,6 +28,8 @@ const Styles = makeStyles(theme => ({
             paddingLeft: theme.spacing(5),
             paddingRight: theme.spacing(5),
         },
+    },
+    toolbar:{
         ...theme.mixins.toolbar
     },
     whiteText: {
@@ -35,7 +37,14 @@ const Styles = makeStyles(theme => ({
     },
     textAlignCenter:{
         textAlign:"center"
-    }
+    },
+  drawer: {
+    width: 240,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: 240,
+  },
 }))
 
 export default Styles;
