@@ -8,7 +8,9 @@ namespace RedPet.Common.Models.Service
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public decimal Price { get; set; }
-        public decimal Taxes { get; set; }
+        public decimal DailyPrice { get; set; }
+        public decimal WeeklyPrice { get; set; }
+        public decimal MonthlyPrice { get; set; }
+        public int? PetSizeId { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace RedPet.Database.EntityTypeConfigurations
         {
             builder.HasOne(x => x.Type).WithMany();
             builder.HasOne(x => x.PetSize).WithMany();
+            builder.HasOne(x => x.Provider).WithMany(x => x.Services);
         }
     }
 }

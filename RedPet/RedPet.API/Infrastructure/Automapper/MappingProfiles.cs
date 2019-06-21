@@ -3,6 +3,7 @@ using RedPet.Common.Models.Booking;
 using RedPet.Common.Models.Pet;
 using RedPet.Common.Models.Product;
 using RedPet.Common.Models.Promotion;
+using RedPet.Common.Models.Provider;
 using RedPet.Common.Models.Service;
 using RedPet.Common.Models.User;
 using RedPet.Database.Entities;
@@ -26,8 +27,12 @@ namespace RedPet.API.Infrastructure.Automapper
             CreateMap<CustomerModel, User>();
 
             CreateMap<CustomerCreateUpdateModel, Customer>().ReverseMap();
+            CreateMap<ProviderCreateUpdateModel, Provider>().ReverseMap();
             CreateMap<CustomerCreateUpdateModel, User>().ReverseMap();
+            CreateMap<ProviderCreateUpdateModel, User>().ReverseMap();
             CreateMap<UserCreateUpdateModel, CustomerCreateUpdateModel>().ReverseMap()
+            .ForMember(dest => dest.UserName, opts => opts.MapFrom(src => src.UserName ?? src.Email));
+            CreateMap<UserCreateUpdateModel, ProviderCreateUpdateModel>().ReverseMap()
             .ForMember(dest => dest.UserName, opts => opts.MapFrom(src => src.UserName ?? src.Email));
 
             CreateMap<UserModel, User>().ReverseMap();

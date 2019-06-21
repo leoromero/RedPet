@@ -50,9 +50,9 @@ namespace RedPet.Core
 
         public async Task<EntityResult<ProviderModel>> GetByEmailAsync(string email)
         {
-            var result = new EntityResult<CustomerModel>();
+            var result = new EntityResult<ProviderModel>();
             var provider = await repository.GetByEmailAsync(email);
-            result.Entity = Mapper.Map<CustomerModel>(provider);
+            result.Entity = Mapper.Map<ProviderModel>(provider);
             return result;
         }
 
