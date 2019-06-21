@@ -1,7 +1,7 @@
 import React, { Component, useContext } from "react";
 import { BrowserRouter as AppRouter, Route, Switch } from "react-router-dom";
 import LoginPage from "./Login/LoginPage";
-import RegisterPage from "./Register/RegisterPage";
+import RegisterPage from "./RegisterUser/RegisterPage";
 import PetPage from "./Pet/PetPage";
 import { AuthContext } from "../contexts/AuthContext";
 import HomePage from "./Home/HomePage";
@@ -11,6 +11,7 @@ import PublicHome from "./PublicHome/PublicHome";
 import PublicAppDrawer from "./PublicHome/AppDrawer";
 import AppDrawer from "./AppBar/AppDrawer";
 import { Grid } from "@material-ui/core";
+import ProfilePage from "./Profile/ProfilePage";
 
 const Router = (props) => {
   const { authenticated } = useContext(AuthContext);
@@ -43,6 +44,7 @@ const Router = (props) => {
                       <Route path="/pets" component={PetsPage} />
                       <Route path="/pet/new" component={PetPage} />
                       <Route path="/pet/:id" component={PetPage} />
+                      <Route path="/profile" component={ProfilePage} />
                     </>
                   )
               }

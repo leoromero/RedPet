@@ -248,25 +248,17 @@ export default {
     },
     users: {
         validateEmail: async (email) => {
-            let response = await makeApiCall(Config.apiURLs.users + '/email/' + email, "get");
+            let response = await makeApiCall(Config.apiURLs.users + '/email/' + email, "head");
 
             try {
                 if (!response) {
                     return errorReturn();
                 }
 
-                let jsonResponse = await response.json();
-                debugger;
-                if (response.ok) {
-                    return {
-                        ok: true,
-                        status: response.status,
-                        result: {
-                            email: jsonResponse
-                        }
+                return {
+                        ok: response.ok,
+                        status: response.status                        
                     };
-                }
-                return errorReturn(jsonResponse);
             }
             catch{
                 return errorReturn();
@@ -434,7 +426,7 @@ export default {
     providers: {
         create: async (user) => {
             let body = JSON.stringify({ "email": user.email, "password": user.password, "firstName": user.name, "lastName": user.lastName, "gender": user.gender, "role": user.role });
-            let response = await makeApiCall(Config.apiURLs.customers, "post", body);
+            let response = await makeApiCall(Config.apiURLs.providers, "post", body);
 
             try {
                 if (!response) {

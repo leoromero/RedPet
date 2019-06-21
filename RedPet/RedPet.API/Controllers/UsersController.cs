@@ -33,7 +33,7 @@ namespace RedPetAPI.Controllers
             return result.ConvertToActionResult(HttpStatusCode.Created);
         }
 
-        [HttpGet("Email/{email}")]
+        [HttpHead("Email/{email}")]
         [AllowAnonymous]
         public async Task<ActionResult<EmailModel>> GetEmail([FromRoute] string email)
         {

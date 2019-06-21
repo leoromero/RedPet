@@ -106,9 +106,9 @@ namespace RedPet.Core
         {
             var result = new EntityResult<EmailModel>();
             var user = await userManager.FindByEmailAsync(email);
-            if (user == null)
+            if (user != null)
             {
-                result.AddError("Email no encontrado", 404);
+                result.AddError("Email ya existente", 409);
                 return result;
             }
 

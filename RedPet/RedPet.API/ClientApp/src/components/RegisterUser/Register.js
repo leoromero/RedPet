@@ -6,7 +6,7 @@ import FacebookLoginButton from '../Login/FacebookLoginButton';
 import useApi from '../../Hooks/useApi';
 import Api from '../../helpers/Api';
 import { MessageContext } from '../../contexts/MessageContext';
-import RegisterForm from './RegisterForm';
+import UserForm from './UserForm';
 import { Formik } from 'formik';
 import userValidation from '../../validations/userValidation';
 import { userModel } from '../../models/user/user';
@@ -40,7 +40,7 @@ const Register = (props) => {
     let apiResponse = '';
     if (role === "Customer")
       apiResponse = await useApi(Api.customers.create(user), showMessage);
-    else if(role === "Provider")
+    else if (role === "Provider")
       apiResponse = await useApi(Api.providers.create(user), showMessage);
 
     if (apiResponse.ok) {
@@ -60,7 +60,8 @@ const Register = (props) => {
           initialValues={user ? user : userModel}
           validationSchema={userValidation}
           onSubmit={submitForm}
-          component={RegisterForm} />
+          render={props => <UserForm {...props} isNew={false} twoColumns={true} />}
+        />
       </CardContent>
       <CardActions>
         <Grid container>

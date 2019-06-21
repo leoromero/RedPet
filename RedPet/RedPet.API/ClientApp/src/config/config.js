@@ -4,6 +4,7 @@ export default {
         login: apiBaseURL+"Auth",
         fbkLogin: apiBaseURL+"ExternalAuth/facebook",
         customers: apiBaseURL + "Customers",
+        customers: apiBaseURL + "Providers",
         auth: apiBaseURL + "Auth",
         refreshToken: apiBaseURL + "Auth/Refresh",
         roles: apiBaseURL + "Roles",

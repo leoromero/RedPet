@@ -5,7 +5,7 @@ import useApi from '../../Hooks/useApi';
 import Api from '../../helpers/Api';
 import { MessageContext } from '../../contexts/MessageContext';
 
-const RegisterForm = (props) => {
+const UserForm = (props) => {
   const {
     values,
     errors,
@@ -13,7 +13,9 @@ const RegisterForm = (props) => {
     handleSubmit,
     handleChange,
     isValid,
-    setFieldTouched
+    setFieldTouched,
+    isNew,
+    twoColumns
   } = props;
 
   const showMessage = useContext(MessageContext);
@@ -39,16 +41,20 @@ const RegisterForm = (props) => {
     if (!validateEmail(email)) return;
 
     const apiResponse = await useApi(Api.users.validateEmail(e.currentTarget.value), showMessage);
-    debugger;
+    
     if (apiResponse) {
-      setUserExists(apiResponse.status !== 404);
+      if (apiResponse.status !== 200 && apiResponse.status !== 409) {
+        showMessage('Se produjo un error intentando conectar al servidor. Intente de nuevo mas tarde.', 'error');
+      }
+
+      setUserExists(apiResponse.status === 409);
     }
   }
 
   return (
     <form onSubmit={handleSubmit} id='user'>
       <Grid container>
-        <Grid item container xs={12} sm={6}>
+        <Grid item container xs={12} sm={twoColumns ? 6 : 12}>
           <Grid item xs={12} container justify='center' className={classes.row}>
             <TextField
               name='email'
@@ -60,30 +66,34 @@ const RegisterForm = (props) => {
               error={Boolean((touched.email && errors.email) || userExists)}
             />
           </Grid>
-          <Grid item container justify='center' className={classes.row}>
-            <TextField
-              type='password'
-              name='password'
-              label='Contraseña'
-              value={values.password}
-              onChange={change('password')}
-              helperText={touched.password ? errors.password : ''}
-              error={Boolean(touched.password && errors.password)}
-            />
-          </Grid>
-          <Grid item container justify='center' className={classes.row}>
-            <TextField
-              type='password'
-              name='password2'
-              label='Repetir Contraseña'
-              value={values.password2}
-              onChange={change('password2')}
-              helperText={touched.password2 ? errors.password2 : ''}
-              error={Boolean(touched.password2 && errors.password2)}
-            />
-          </Grid>
+          {isNew &&
+            <>
+              <Grid item container justify='center' className={classes.row}>
+                <TextField
+                  type='password'
+                  name='password'
+                  label='Contraseña'
+                  value={values.password}
+                  onChange={change('password')}
+                  helperText={touched.password ? errors.password : ''}
+                  error={Boolean(touched.password && errors.password)}
+                />
+              </Grid>
+              <Grid item container justify='center' className={classes.row}>
+                <TextField
+                  type='password'
+                  name='password2'
+                  label='Repetir Contraseña'
+                  value={values.password2}
+                  onChange={change('password2')}
+                  helperText={touched.password2 ? errors.password2 : ''}
+                  error={Boolean(touched.password2 && errors.password2)}
+                />
+              </Grid>
+            </>
+          }
         </Grid>
-        <Grid item container xs={12} sm={6}>
+        <Grid item container xs={12} sm={twoColumns ? 6 : 12}>
           <Grid item item xs={12} container justify='center' className={classes.row}>
             <TextField
               name='name'
@@ -131,4 +141,4 @@ const RegisterForm = (props) => {
     </form>
   )
 }
-export default RegisterForm;
+export default UserForm;
