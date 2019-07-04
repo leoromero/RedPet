@@ -240,8 +240,6 @@ namespace RedPet.Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address");
-
                     b.Property<DateTime>("CreatedDate");
 
                     b.Property<DateTime?>("InactivationDate");
@@ -250,10 +248,26 @@ namespace RedPet.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasAlternateKey("UserId");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("RedPet.Database.Entities.Frecuency", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime?>("InactivationDate");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Frecuency");
                 });
 
             modelBuilder.Entity("RedPet.Database.Entities.HairType", b =>
@@ -287,7 +301,7 @@ namespace RedPet.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IdentificationType");
+                    b.ToTable("IdentificationTypes");
                 });
 
             modelBuilder.Entity("RedPet.Database.Entities.Identity.User", b =>
@@ -372,7 +386,7 @@ namespace RedPet.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Nationality");
+                    b.ToTable("Nationalities");
                 });
 
             modelBuilder.Entity("RedPet.Database.Entities.Pet", b =>
@@ -559,24 +573,23 @@ namespace RedPet.Database.Migrations
 
                     b.Property<string>("Identification");
 
-                    b.Property<int>("IdentificationTypeId");
+                    b.Property<int?>("IdentificationTypeId");
 
                     b.Property<DateTime?>("InactivationDate");
 
-                    b.Property<int>("NationalityId");
+                    b.Property<int?>("NationalityId");
 
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
+                    b.HasAlternateKey("UserId");
+
                     b.HasIndex("IdentificationTypeId");
 
                     b.HasIndex("NationalityId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Provider");
+                    b.ToTable("Providers");
                 });
 
             modelBuilder.Entity("RedPet.Database.Entities.Service", b =>
@@ -589,31 +602,79 @@ namespace RedPet.Database.Migrations
 
                     b.Property<decimal>("DailyPrice");
 
-                    b.Property<string>("Description");
+                    b.Property<int?>("FrecuencyId");
+
+                    b.Property<int>("FrecuendyId");
 
                     b.Property<DateTime?>("InactivationDate");
 
-                    b.Property<decimal>("MonthlyPrice");
-
                     b.Property<string>("Name");
-
-                    b.Property<int?>("PetSizeId");
 
                     b.Property<int>("ProviderId");
 
                     b.Property<int>("ServiceTypeId");
 
-                    b.Property<decimal>("WeeklyPrice");
+                    b.Property<int>("WeekDaysId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PetSizeId");
+                    b.HasIndex("FrecuencyId");
 
                     b.HasIndex("ProviderId");
 
                     b.HasIndex("ServiceTypeId");
 
+                    b.HasIndex("WeekDaysId");
+
                     b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("RedPet.Database.Entities.ServicePetSize", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime?>("InactivationDate");
+
+                    b.Property<int>("PetSizeId");
+
+                    b.Property<int?>("ServiceId");
+
+                    b.Property<int>("ServicePriceId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PetSizeId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("ServicePricePetSizes");
+                });
+
+            modelBuilder.Entity("RedPet.Database.Entities.ServiceSubService", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime?>("InactivationDate");
+
+                    b.Property<int>("ServiceId");
+
+                    b.Property<int>("ServiceSubTypeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("ServiceSubTypeId");
+
+                    b.ToTable("ServicePriceServiceSubTypes");
                 });
 
             modelBuilder.Entity("RedPet.Database.Entities.ServiceType", b =>
@@ -630,7 +691,7 @@ namespace RedPet.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ServiceType");
+                    b.ToTable("ServiceTypes");
                 });
 
             modelBuilder.Entity("RedPet.Database.Entities.State", b =>
@@ -648,6 +709,27 @@ namespace RedPet.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("State");
+                });
+
+            modelBuilder.Entity("RedPet.Database.Entities.SubService", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime?>("InactivationDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("ServiceTypeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceTypeId");
+
+                    b.ToTable("ServiceSubTypes");
                 });
 
             modelBuilder.Entity("RedPet.Database.Entities.Vaccination", b =>
@@ -713,6 +795,35 @@ namespace RedPet.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Vet");
+                });
+
+            modelBuilder.Entity("RedPet.Database.Entities.WeekDays", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("Friday");
+
+                    b.Property<DateTime?>("InactivationDate");
+
+                    b.Property<bool>("Monday");
+
+                    b.Property<bool>("Saturday");
+
+                    b.Property<bool>("Sunday");
+
+                    b.Property<bool>("Thursday");
+
+                    b.Property<bool>("Tuesday");
+
+                    b.Property<bool>("Wednesday");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WeekDays");
                 });
 
             modelBuilder.Entity("RedPet.Database.Entities.WeightRange", b =>
@@ -921,13 +1032,11 @@ namespace RedPet.Database.Migrations
                 {
                     b.HasOne("RedPet.Database.Entities.IdentificationType", "IdentificationType")
                         .WithMany()
-                        .HasForeignKey("IdentificationTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("IdentificationTypeId");
 
                     b.HasOne("RedPet.Database.Entities.Nationality", "Nationality")
                         .WithMany()
-                        .HasForeignKey("NationalityId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("NationalityId");
 
                     b.HasOne("RedPet.Database.Entities.Identity.User", "User")
                         .WithOne()
@@ -937,17 +1046,56 @@ namespace RedPet.Database.Migrations
 
             modelBuilder.Entity("RedPet.Database.Entities.Service", b =>
                 {
-                    b.HasOne("RedPet.Database.Entities.PetSize", "PetSize")
+                    b.HasOne("RedPet.Database.Entities.Frecuency", "Frecuency")
                         .WithMany()
-                        .HasForeignKey("PetSizeId");
+                        .HasForeignKey("FrecuencyId");
 
                     b.HasOne("RedPet.Database.Entities.Provider", "Provider")
                         .WithMany("Services")
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("RedPet.Database.Entities.ServiceType", "Type")
+                    b.HasOne("RedPet.Database.Entities.ServiceType", "ServiceType")
                         .WithMany()
+                        .HasForeignKey("ServiceTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("RedPet.Database.Entities.WeekDays", "WeekDays")
+                        .WithMany()
+                        .HasForeignKey("WeekDaysId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("RedPet.Database.Entities.ServicePetSize", b =>
+                {
+                    b.HasOne("RedPet.Database.Entities.PetSize", "PetSize")
+                        .WithMany()
+                        .HasForeignKey("PetSizeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("RedPet.Database.Entities.Service", "Service")
+                        .WithMany("ServicePetSizes")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("RedPet.Database.Entities.ServiceSubService", b =>
+                {
+                    b.HasOne("RedPet.Database.Entities.Service", "Service")
+                        .WithMany("ServiceSubServices")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("RedPet.Database.Entities.SubService", "ServiceSubType")
+                        .WithMany()
+                        .HasForeignKey("ServiceSubTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("RedPet.Database.Entities.SubService", b =>
+                {
+                    b.HasOne("RedPet.Database.Entities.ServiceType", "ServiceType")
+                        .WithMany("SubServices")
                         .HasForeignKey("ServiceTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

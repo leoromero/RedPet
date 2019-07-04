@@ -22,8 +22,19 @@ namespace RedPet.Database.Repositories
         public Task<Provider> GetByEmailAsync(string email)
         {
             return DbSet.Include(x => x.User)
+                              .Include(x => x.Nationality)
+                              .Include(x => x.IdentificationType)
                               .Include(x => x.Services)
                               .SingleOrDefaultAsync(x => x.User.Email == email);
+        }
+
+        public Task<Provider> GetByUserIdAsync(int userid)
+        {
+            return DbSet.Include(x => x.User)
+                              .Include(x => x.Nationality)
+                              .Include(x => x.IdentificationType)
+                              .Include(x => x.Services)
+                              .SingleOrDefaultAsync(x => x.User.Id == userid);
         }
 
         public async Task<IEnumerable<Service>> GetServicesAsync(int userId)
@@ -39,5 +50,6 @@ namespace RedPet.Database.Repositories
     {
         Task<Provider> GetByEmailAsync(string email);
         Task<IEnumerable<Service>> GetServicesAsync(int userId);
+        Task<Provider> GetByUserIdAsync(int userid);
     }
 }

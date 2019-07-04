@@ -36,10 +36,10 @@ namespace RedPetAPI.Controllers
         }
 
         [HttpPut("{serviceTypeId}")]
-        public async Task<ActionResult> PutAsync(int serviceTypeId, [FromBody] ServiceTypeModel model)
+        public async Task<ActionResult<ServiceTypeModel>> PutAsync(int serviceTypeId, [FromBody] ServiceTypeModel model)
         {
-            await serviceTypeService.UpdateAsync(serviceTypeId, model);
-            return Ok();
+            var result = await serviceTypeService.UpdateAsync(serviceTypeId, model);
+            return result.ConvertToActionResult(System.Net.HttpStatusCode.OK);
         }
 
         [HttpDelete("{serviceTypeId}")]

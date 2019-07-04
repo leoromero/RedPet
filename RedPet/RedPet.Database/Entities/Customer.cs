@@ -5,7 +5,6 @@ namespace RedPet.Database.Entities
 {
     public class Customer : BaseEntity
     {
-        public string Address { get; set; }
         public virtual IList<Pet> Pets { get; internal set; }
 
         public int UserId { get; set; }

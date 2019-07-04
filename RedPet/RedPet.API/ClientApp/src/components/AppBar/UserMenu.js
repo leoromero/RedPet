@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
 import { AuthContext } from '../../contexts/AuthContext';
 import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const UserMenu = (props) => {
 
@@ -21,7 +22,7 @@ const UserMenu = (props) => {
       onClose={props.onClose}
       getContentAnchorEl={null}
     >
-      <MenuItem onClick={props.onClose}>Perfil</MenuItem>
+      <MenuItem onClick={props.onClose} component={Link} to='/profile'>Perfil</MenuItem>
       <MenuItem onClick={props.onClose}>Mi Cuenta</MenuItem>
       <MenuItem onClick={signOut}>Cerrar sesión</MenuItem>
     </Menu>

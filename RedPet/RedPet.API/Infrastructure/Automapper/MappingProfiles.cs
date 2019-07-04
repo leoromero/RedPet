@@ -26,8 +26,20 @@ namespace RedPet.API.Infrastructure.Automapper
                 .ForMember(x => x.User, opts => opts.Ignore());
             CreateMap<CustomerModel, User>();
 
+            CreateMap<Provider, ProviderModel>()
+                .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.User.Email))
+                .ForMember(dest => dest.FacebookId, opts => opts.MapFrom(src => src.User.FacebookId))
+                .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.User.FirstName))
+                .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.User.Gender))
+                .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.User.LastName))
+                .ForMember(dest => dest.UserName, opts => opts.MapFrom(src => src.User.UserName));
+            CreateMap<ProviderModel, Provider>()
+                .ForMember(x => x.User, opts => opts.Ignore());
+            CreateMap<ProviderModel, User>();
+
             CreateMap<CustomerCreateUpdateModel, Customer>().ReverseMap();
-            CreateMap<ProviderCreateUpdateModel, Provider>().ReverseMap();
+            CreateMap<ProviderCreateUpdateModel, Provider>()
+                .ForMember(dest => dest.User, opts => opts.Ignore());
             CreateMap<CustomerCreateUpdateModel, User>().ReverseMap();
             CreateMap<ProviderCreateUpdateModel, User>().ReverseMap();
             CreateMap<UserCreateUpdateModel, CustomerCreateUpdateModel>().ReverseMap()
@@ -38,7 +50,10 @@ namespace RedPet.API.Infrastructure.Automapper
             CreateMap<UserModel, User>().ReverseMap();
             CreateMap<UserCreateUpdateModel, User>().ReverseMap()
                 .ForMember(dest => dest.UserName, opts => opts.MapFrom(src => src.UserName ?? src.Email));
-                
+
+            CreateMap<Nationality, NationalityModel>().ReverseMap();
+            CreateMap<IdentificationType, IdentificationTypeModel>().ReverseMap();
+
             CreateMap<Pet, PetModel>().ReverseMap();
             CreateMap<Pet, PetCreateUpdateModel>().ReverseMap();
 
@@ -51,6 +66,8 @@ namespace RedPet.API.Infrastructure.Automapper
             CreateMap<Booking, BookingCreateUpdateModel>().ReverseMap();
             CreateMap<State, StateModel>().ReverseMap();
 
+            CreateMap<ServiceType, ServiceTypeModel>().ReverseMap();
+
             CreateMap<Product, ProductModel>().ReverseMap();
             CreateMap<Service, ServiceModel>().ReverseMap();
             CreateMap<Promotion, PromotionModel>().ReverseMap();
@@ -62,6 +79,8 @@ namespace RedPet.API.Infrastructure.Automapper
             CreateMap<Vaccination, VaccinationModel>().ReverseMap();
 
             CreateMap<Vet, VetModel>().ReverseMap();
+
+            CreateMap<Frecuency, FrecuencyModel>().ReverseMap();
         }
     }
 }

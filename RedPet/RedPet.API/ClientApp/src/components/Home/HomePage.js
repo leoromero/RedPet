@@ -17,12 +17,13 @@ const HomePage = (props) => {
 
   useEffect(() => {
     const apiCall = async () => {
-      const apiResponse = await useApi(Api.customers.pets(user.id), showMessage);
-debugger;
-      if (apiResponse.ok) {
-        apiResponse.result.length > 0 ?
-          setPets(apiResponse.result)
-          : toggleShowNoPetsModal();
+      if (user.isCustomer) {
+        const apiResponse = await useApi(Api.customers.pets(user.id), showMessage);
+        if (apiResponse.ok) {
+          apiResponse.result.length > 0 ?
+            setPets(apiResponse.result)
+            : toggleShowNoPetsModal();
+        }
       }
     };
 

@@ -27,6 +27,18 @@ namespace RedPet.API.Extensions
 
                 var weightRangeService = scope.ServiceProvider.GetRequiredService<IWeightRangeService>();
                 SeedData.SeedWeightRangesAsync(weightRangeService).GetAwaiter().GetResult();
+
+                var identificationTypesService = scope.ServiceProvider.GetRequiredService<IIdentificationTypeService>();
+                SeedData.SeedIdTypesAsync(identificationTypesService).GetAwaiter().GetResult();
+
+                var nationalityService = scope.ServiceProvider.GetRequiredService<INationalityService>();
+                SeedData.SeedNationalitiessAsync(nationalityService).GetAwaiter().GetResult();
+
+                var serviceTypeService = scope.ServiceProvider.GetRequiredService<IServiceTypeService>();
+                SeedData.SeedServiceTypesAsync(serviceTypeService).GetAwaiter().GetResult();
+
+                var frecuencyService = scope.ServiceProvider.GetRequiredService<IFrecuencyService>();
+                SeedData.SeedFrecuenciesAsync(frecuencyService).GetAwaiter().GetResult();
             }
 
             return webhost;

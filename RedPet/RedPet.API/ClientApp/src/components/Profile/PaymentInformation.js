@@ -16,7 +16,7 @@ const PaymentInformation = (props) => {
     
     useEffect(() => {
           const apiCall = async () => {
-            const apiResponse = await useApi(Api.providers.getById(user.userId), showMessage);
+            const apiResponse = await useApi(Api.providers.getByUserName(user.userId), showMessage);
     
             if (apiResponse.ok) {
               setProvider(apiResponse.result);

@@ -21,6 +21,16 @@ namespace RedPet.Database
         }
 
         public DbSet<Service> Services { get; set; }
+        public DbSet<ServicePetSize> ServicePricePetSizes { get; set; }
+        public DbSet<ServiceSubService> ServicePriceServiceSubTypes { get; set; }
+        public DbSet<ServiceType> ServiceTypes { get; set; }
+        public DbSet<SubService> ServiceSubTypes { get; set; }
+
+        public DbSet<Provider> Providers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Nationality> Nationalities{ get; set; }
+        public DbSet<IdentificationType> IdentificationTypes { get; set; }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Promotion> Promotions { get; set; }
         public DbSet<PromotionProduct> PromotionsProducts { get; set; }
@@ -31,8 +41,8 @@ namespace RedPet.Database
         public DbSet<PetSize> PetSizes { get; set; }
         public DbSet<HairType> HairTypes { get; set; }
         public DbSet<Breed> Breeds { get; set; }
+
         public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

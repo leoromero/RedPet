@@ -15,10 +15,10 @@ namespace RedPet.Common.Models.Provider
         public string Email { get; set; }
         public string UserName { get; set; }
         public int UserId { get; set; }
-        public int IdentificationType { get; set; }
-        public string Identification { get; set; }
-        public string NationalityCode { get; set; }
-        public string Address { get; set; }
+        public IdentificationTypeModel IdentificationType { get; set; } = new IdentificationTypeModel();
+        public string Identification { get; set; } = string.Empty;
+        public NationalityModel Nationality { get; set; } = new NationalityModel(); 
+        public string Address { get; set; } = string.Empty;
 
         public string Name => $"{FirstName} {LastName}";
     }
@@ -28,14 +28,14 @@ namespace RedPet.Common.Models.Provider
         public string Gender { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public long FacebookId { get; set; }
+        public long? FacebookId { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
         public int UserId { get; set; }
         public string Password { get; set; }
-        public int IdType { get; set; }
+        public int? IdentificationTypeId { get; set; }
         public string Identification { get; set; }
-        public string NationalityCode { get; set; }
+        public int? NationalityId { get; set; }
         public string Address { get; set; }
     }
 }

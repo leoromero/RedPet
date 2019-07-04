@@ -48,10 +48,10 @@ const AppDrawer = props => {
 
   const drawer = (
     <>
-    <div className={classes.toolbar} />
+      <div className={classes.toolbar} />
       <MenuList>
         <Hidden mdUp>
-          <MenuItem component={Link} button>
+          <MenuItem component={Link} to='/profile' button>
             <ListItemIcon > <AccountCircle /></ListItemIcon>
             <ListItemText primary='Perfil' />
           </MenuItem>
@@ -64,8 +64,15 @@ const AppDrawer = props => {
             <ListItemText primary='Notificaciones' />
           </MenuItem>
         </Hidden>
-
-        {user.role == 'Customer' &&
+        {user.isProvider &&
+          <>
+            <MenuItem component={Link} to='/services' button>
+              <ListItemIcon> <Store /></ListItemIcon>
+              <ListItemText primary='Servicios' />
+            </MenuItem>
+          </>
+        }
+        {user.isCustomer &&
           <>
             <MenuItem component={Link} to='/pets' button>
               <ListItemIcon> <Pets /></ListItemIcon>
@@ -128,65 +135,61 @@ const AppDrawer = props => {
               </Typography>
           </Hidden>
           <div className={classes.grow} />
-          {!authenticated ?
-            <Button component={Link} to='/login'>Iniciar Sesión</Button>
-            :
-            <>
-              <Hidden smDown >
-                <IconButton>
-                  <Badge badgeContent={4} color="secondary">
-                    <MailIcon />
-                  </Badge>
-                </IconButton>
-                <IconButton>
-                  <Badge badgeContent={17} color="secondary">
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton>
-                <IconButton
-                  aria-owns='material-appbar'
-                  aria-haspopup="true"
-                  onClick={handleUserMenuOpen}
-                >
-                  <AccountCircle />
-                </IconButton>
-              </Hidden>
-              <Hidden mdUp>
-                <IconButton aria-haspopup="true" onClick={handleMobileMenuOpen}>
-                  <MoreIcon />
-                </IconButton>
-              </Hidden>
-            </>
-          }
+          <>
+            <Hidden smDown >
+              <IconButton>
+                <Badge badgeContent={4} color="secondary">
+                  <MailIcon />
+                </Badge>
+              </IconButton>
+              <IconButton>
+                <Badge badgeContent={17} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                aria-owns='material-appbar'
+                aria-haspopup="true"
+                onClick={handleUserMenuOpen}
+              >
+                <AccountCircle />
+              </IconButton>
+            </Hidden>
+            <Hidden mdUp>
+              <IconButton aria-haspopup="true" onClick={handleMobileMenuOpen}>
+                <MoreIcon />
+              </IconButton>
+            </Hidden>
+          </>
         </Toolbar>
       </AppBar>
-        <>
-          <Hidden smDown>
-            <Drawer
-              className={classes.drawer}
-              variant="permanent"
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
+      <>
+        <Hidden smDown>
+          <Drawer
+            className={classes.drawer}
+            variant="permanent"
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
 
-          <Hidden mdUp>
-            <Drawer
-              className={classes.drawer}
-              variant="temporary"
-              open={isMobileMenuOpen}
-              onClose={handleMobileMenuClose}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
-        </>
+        <Hidden mdUp>
+          <Drawer
+            className={classes.drawer}
+            variant="temporary"
+            open={isMobileMenuOpen}
+            onClose={handleMobileMenuClose}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+      </>
       <UserMenu
         open={isUserMenuOpen}
         onClose={handleUserMenuClose}

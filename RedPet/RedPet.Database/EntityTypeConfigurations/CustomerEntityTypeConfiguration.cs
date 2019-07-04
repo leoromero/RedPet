@@ -8,6 +8,7 @@ namespace RedPet.Database.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
+            builder.HasAlternateKey(x => x.UserId);
             builder.HasMany(x => x.Pets).WithOne(x => x.Owner);
             builder.HasOne(x => x.User).WithOne();
         }

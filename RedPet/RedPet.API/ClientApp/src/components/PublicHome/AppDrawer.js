@@ -18,6 +18,9 @@ const AppDrawer = props => {
   const { isOpen: isDrawerOpen, toggle: toggleDrawer } = useOpen();
 
   const handleLinkClick = event => {
+    if(props.location.pathname !== '/')
+      return;
+      
     setActiveLink(event.currentTarget.name);
     const element = document.getElementById(event.currentTarget.name)
     element.scrollIntoView({ behavior: 'smooth' });
@@ -56,28 +59,30 @@ const AppDrawer = props => {
           <IconButton name="root" component={Link} to='/' onClick={handleLinkClick}>
             <RedPetIcon />
           </IconButton>
-          <Hidden smDown>
-            <Typography className={classes.title} variant="h6" noWrap>
-              RedPet
+          {
+            <Hidden smDown>
+              <Typography className={classes.title} variant="h6" noWrap>
+                RedPet
               </Typography>
-            <div className={classes.grow} />
-            <Button name="services" variant="text" component={Link} to='/#services' color={activeLink == 'services' ? "secondary" : "secondary"} onClick={handleLinkClick} > Servicios </Button>
-            <div className={classes.grow} />
-            <Button name="workWithUs" variant="text" component={Link} to='/register/Provider' color='secondary'> Trabaja con RedPet </Button>
+              <div className={classes.grow} />
+              <Button name="services" variant="text" component={Link} to='/#services' color={activeLink == 'services' ? "secondary" : "secondary"} onClick={handleLinkClick} > Servicios </Button>
+              <div className={classes.grow} />
+              <Button name="workWithUs" variant="text" component={Link} to='/register/Provider' color='secondary'> Trabaja con RedPet </Button>
 
-          </Hidden>
+            </Hidden>
+          }
           <div className={classes.grow} />
           {
             props.location.pathname !== '/login' &&
             <Hidden mdDown>
-            <Button variant='contained' color='secondary' component={Link} to='/login'>Iniciar Sesión</Button>
-            </Hidden>  
+              <Button variant='contained' color='secondary' component={Link} to='/login'>Iniciar Sesión</Button>
+            </Hidden>
           }
           <Hidden mdUp>
-          <IconButton aria-haspopup="true" onClick={toggleDrawer}>
-            <MoreIcon />
-          </IconButton>
-        </Hidden>
+            <IconButton aria-haspopup="true" onClick={toggleDrawer}>
+              <MoreIcon />
+            </IconButton>
+          </Hidden>
         </Toolbar>
       </AppBar>
       <Hidden mdUp>

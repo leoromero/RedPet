@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using RedPet.Common.Models.Base;
 using RedPet.Database;
 using RedPet.Database.Entities;
 using RedPet.Database.Repositories;
-using RedPet.Common.Models.Base;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RedPet.Core.Base
 {
@@ -76,13 +76,19 @@ namespace RedPet.Core.Base
             await UnitOfWork.Complete();
         }
 
-        public virtual async Task UpdateAsync(int id, TUpdateModel model)
+        public virtual async Task<EntityResult<TViewModel>> UpdateAsync(int id, TUpdateModel model)
         {
+            var result = new EntityResult<TViewModel>();
+
             var entity = await Repository.GetAsync(id);
 
             Mapper.Map(model, entity);
 
             await UnitOfWork.Complete();
+
+            result.Entity = Mapper.Map<TViewModel>(entity);
+
+            return result;
         }
     }
 
@@ -91,7 +97,7 @@ namespace RedPet.Core.Base
         Task<EntityResult<List<TViewModel>>> GetAsync();
         Task<EntityResult<TViewModel>> GetAsync(int id);
         Task<EntityResult<int>> CreateAsync(TCreateModel model);
-        Task UpdateAsync(int id, TUpdateModel model);
+        Task<EntityResult<TViewModel>> UpdateAsync(int id, TUpdateModel model);
         Task DeleteAsync(int id);
     }
 

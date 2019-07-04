@@ -60,7 +60,7 @@ const Register = (props) => {
           initialValues={user ? user : userModel}
           validationSchema={userValidation}
           onSubmit={submitForm}
-          render={props => <UserForm {...props} isNew={false} twoColumns={true} />}
+          render={props => <UserForm {...props} isNew={true} twoColumns={true} />}
         />
       </CardContent>
       <CardActions>

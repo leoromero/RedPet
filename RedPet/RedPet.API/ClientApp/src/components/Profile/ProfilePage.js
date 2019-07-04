@@ -8,8 +8,8 @@ const ProfilePage = (props) => {
 
     const classes = styles();
     return (
-        <Grid container justify='center' alignItems='center' className={classes.page}>
-            <Grid item xs={12} md={6}>
+        <Grid container justify='center' className={classes.page}>
+            <Grid item xs={12} md={12}>
                 <Profile />
             </Grid>
         </Grid>

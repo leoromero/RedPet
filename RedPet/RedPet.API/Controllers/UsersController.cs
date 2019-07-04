@@ -1,13 +1,11 @@
-using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RedPet.API.Extensions;
 using RedPet.Common.Auth.Models;
-using RedPet.Common.Models.Pet;
 using RedPet.Common.Models.User;
 using RedPet.Core;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace RedPetAPI.Controllers
 {
@@ -31,6 +29,13 @@ namespace RedPetAPI.Controllers
             var result = await userService.CreateUserAsync(model);
 
             return result.ConvertToActionResult(HttpStatusCode.Created);
+        }
+        
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserModel>> Get([FromRoute] int id)
+        {
+            var result = await userService.GetAsync(id);
+            return result.ConvertToActionResult(HttpStatusCode.OK);
         }
 
         [HttpHead("Email/{email}")]

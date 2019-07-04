@@ -41,7 +41,7 @@ const UserForm = (props) => {
     if (!validateEmail(email)) return;
 
     const apiResponse = await useApi(Api.users.validateEmail(e.currentTarget.value), showMessage);
-    
+
     if (apiResponse) {
       if (apiResponse.status !== 200 && apiResponse.status !== 409) {
         showMessage('Se produjo un error intentando conectar al servidor. Intente de nuevo mas tarde.', 'error');
@@ -96,12 +96,12 @@ const UserForm = (props) => {
         <Grid item container xs={12} sm={twoColumns ? 6 : 12}>
           <Grid item item xs={12} container justify='center' className={classes.row}>
             <TextField
-              name='name'
+              name='firstName'
               label='Nombre'
-              value={values.name}
-              onChange={change('name')}
-              helperText={touched.name ? errors.name : ''}
-              error={Boolean(touched.name && errors.name)}
+              value={values.firstName}
+              onChange={change('firstName')}
+              helperText={touched.firstName ? errors.firstName : ''}
+              error={Boolean(touched.firstName && errors.firstName)}
             />
           </Grid>
           <Grid item container justify='center' className={classes.row}>
@@ -120,6 +120,7 @@ const UserForm = (props) => {
               <FormControl
                 component="fieldset"
                 className={classes.formControl}
+                error={Boolean(touched.gender && errors.gender)}
               >
                 <FormLabel component="legend">Sexo</FormLabel>
                 <RadioGroup
@@ -129,8 +130,8 @@ const UserForm = (props) => {
                   className={classes.row}
                   onChange={change('gender')}
                 >
-                  <FormControlLabel value="f" control={<Radio />} label="Mujer" />
-                  <FormControlLabel value="m" control={<Radio />} label="Hombre" />
+                  <FormControlLabel value="f" control={<Radio checked={values.gender === "f"} />} label="Mujer" />
+                  <FormControlLabel value="m" control={<Radio checked={values.gender === "m"} />} label="Hombre" />
                 </RadioGroup>
                 <FormHelperText >{touched.gender && errors.gender}</FormHelperText>
               </FormControl>

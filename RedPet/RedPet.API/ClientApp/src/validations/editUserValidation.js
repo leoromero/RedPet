@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 const schema = Yup.object({
-    name: Yup.string("Ingrese un nombre")
+    firstName: Yup.string("Ingrese un nombre")
         .required("El nombre es obligatorio"),
     lastName: Yup.string("Ingrese el apellido")
         .required("El apellido es obligatorio"),

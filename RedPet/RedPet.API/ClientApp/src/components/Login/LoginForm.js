@@ -47,7 +47,7 @@ const LoginForm = (props) => {
 
         </Grid>
         <Grid item xs={12}>
-          <Grid item xs={12} container spacing={1} alignItems="flex-end">
+          <Grid container spacing={1} alignItems="flex-end">
             <Hidden mdDown>
               <Grid item>
                 <Lock color='disabled' />

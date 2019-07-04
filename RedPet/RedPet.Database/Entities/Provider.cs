@@ -5,10 +5,10 @@ namespace RedPet.Database.Entities
 {
     public class Provider : BaseEntity
     {
-        public string Address { get; set; }
-        public string Identification { get; set; }
-        public int NationalityId { get; set; }
-        public int IdentificationTypeId { get; set; }
+        public string Address { get; set; } = string.Empty;
+        public string Identification { get; set; } = string.Empty;
+        public int? NationalityId { get; set; }
+        public int? IdentificationTypeId { get; set; }
 
         public virtual Nationality Nationality{ get; set; }
         public int UserId { get; set; }

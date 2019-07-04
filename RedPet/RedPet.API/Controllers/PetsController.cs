@@ -38,12 +38,12 @@ namespace RedPetAPI.Controllers
         }
 
         [HttpPut("{petId}")]
-        public async Task<ActionResult> PutAsync(int petId, [FromBody] PetCreateUpdateModel model)
+        public async Task<ActionResult<PetModel>> PutAsync(int petId, [FromBody] PetCreateUpdateModel model)
         {
            // model.OwnerId = User.GetUserId();
 
-            await petService.UpdateAsync(petId, model);
-            return Ok();
+            var result = await petService.UpdateAsync(petId, model);
+            return result.ConvertToActionResult(System.Net.HttpStatusCode.OK);
         }
     }
 }

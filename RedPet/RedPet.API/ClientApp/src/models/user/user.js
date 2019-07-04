@@ -1,6 +1,6 @@
 
 export const userModel = {
-    name: '',
+    firstName: '',
     lastName: '',
     email: '',
     password: '',

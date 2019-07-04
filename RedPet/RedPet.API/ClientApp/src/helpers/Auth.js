@@ -16,7 +16,9 @@ const getUserFromToken = (token) => {
     return {
         username: decodedToken.payload.sub,
         id: decodedToken.payload.id,
-        role: decodedToken.payload.role
+        role: decodedToken.payload.role,
+        isCustomer: decodedToken.payload.role === "Customer",
+        isProvider: decodedToken.payload.role === "Provider",        
     };
 };
 export default {

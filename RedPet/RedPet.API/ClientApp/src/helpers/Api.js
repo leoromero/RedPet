@@ -54,6 +54,7 @@ const refreshToken = async () => {
         return true;
     }
 
+    AuthHelper.logout();
     return false;
 };
 const errorReturn = (response) => {
@@ -84,6 +85,86 @@ export default {
             }];
 
             return { ok: true, result: vaccines };
+        },
+        frecuencies: async () => {
+            let response = await makeApiCall(Config.apiURLs.frecuencies, "get");
+            try {
+                if (!response) {
+                    return errorReturn();
+                }
+
+                let jsonResponse = await response.json();
+                if (response.ok) {
+                    return {
+                        ok: true,
+                        result: jsonResponse
+                    };
+                }
+                return errorReturn(jsonResponse);
+            }
+            catch{
+                return errorReturn();
+            }
+        },
+        nationalities: async () => {
+            let response = await makeApiCall(Config.apiURLs.nationalities, "get");
+            try {
+                if (!response) {
+                    return errorReturn();
+                }
+
+                let jsonResponse = await response.json();
+                if (response.ok) {
+                    return {
+                        ok: true,
+                        result: jsonResponse
+                    };
+                }
+                return errorReturn(jsonResponse);
+            }
+            catch{
+                return errorReturn();
+            }
+        },
+        serviceTypes: async () => {
+            let response = await makeApiCall(Config.apiURLs.serviceTypes, "get");
+            try {
+                if (!response) {
+                    return errorReturn();
+                }
+
+                let jsonResponse = await response.json();
+                if (response.ok) {
+                    return {
+                        ok: true,
+                        result: jsonResponse
+                    };
+                }
+                return errorReturn(jsonResponse);
+            }
+            catch{
+                return errorReturn();
+            }
+        },
+        idTypes: async () => {
+            let response = await makeApiCall(Config.apiURLs.idTypes, "get");
+            try {
+                if (!response) {
+                    return errorReturn();
+                }
+
+                let jsonResponse = await response.json();
+                if (response.ok) {
+                    return {
+                        ok: true,
+                        result: jsonResponse
+                    };
+                }
+                return errorReturn(jsonResponse);
+            }
+            catch{
+                return errorReturn();
+            }
         },
         breeds: async () => {
             let response = await makeApiCall(Config.apiURLs.breeds, "get");
@@ -256,9 +337,9 @@ export default {
                 }
 
                 return {
-                        ok: response.ok,
-                        status: response.status                        
-                    };
+                    ok: response.ok,
+                    status: response.status
+                };
             }
             catch{
                 return errorReturn();
@@ -288,7 +369,53 @@ export default {
             catch{
                 return errorReturn();
             }
-        }
+        },
+        update: async (user) => {
+            let body = JSON.stringify({ "email": user.email, "firstName": user.name, "lastName": user.lastName, "gender": user.gender });
+
+            let response = await makeApiCall(Config.apiURLs.users, "put", body);
+
+            try {
+                if (!response) {
+                    return errorReturn();
+                }
+
+                let jsonResponse = await response.json();
+                if (response.ok) {
+                    return {
+                        ok: true,
+                        result: jsonResponse
+
+                    };
+                }
+                return errorReturn(jsonResponse);
+            }
+            catch{
+                return errorReturn();
+            }
+        },
+        getById: async (id) => {
+            let response = await makeApiCall(Config.apiURLs.users + '/' + id, "get");
+
+            try {
+                if (!response) {
+                    return errorReturn();
+                }
+                let jsonResponse = await response.json();
+                if (response.ok) {
+                    console.log(jsonResponse);
+                    return {
+                        ok: true,
+                        result: jsonResponse
+                    };
+                }
+
+                return errorReturn(jsonResponse);
+            }
+            catch{
+                return errorReturn();
+            }
+        },
     },
     customers: {
         pets: async (userid) => {
@@ -314,7 +441,7 @@ export default {
             }
         },
         create: async (user) => {
-            let body = JSON.stringify({ "email": user.email, "password": user.password, "firstName": user.name, "lastName": user.lastName, "gender": user.gender, "role": user.role });
+            let body = JSON.stringify({ "email": user.email, "password": user.password, "firstName": user.firstName, "lastName": user.lastName, "gender": user.gender, "role": user.role });
             let response = await makeApiCall(Config.apiURLs.customers, "post", body);
 
             try {
@@ -359,8 +486,8 @@ export default {
                 return errorReturn();
             }
         },
-        getById: async (id) => {
-            let response = await makeApiCall(Config.apiURLs.customers + '/' + id, "get");
+        getByUsername: async (username) => {
+            let response = await makeApiCall(Config.apiURLs.customers + '/' + username, "get");
 
             try {
                 if (!response) {
@@ -425,7 +552,13 @@ export default {
     },
     providers: {
         create: async (user) => {
-            let body = JSON.stringify({ "email": user.email, "password": user.password, "firstName": user.name, "lastName": user.lastName, "gender": user.gender, "role": user.role });
+            let body = JSON.stringify({
+                "email": user.email,
+                "password": user.password,
+                "firstName": user.firstName,
+                "lastName": user.lastName,
+                "gender": user.gender
+            });
             let response = await makeApiCall(Config.apiURLs.providers, "post", body);
 
             try {
@@ -442,6 +575,61 @@ export default {
                         }
                     };
                 }
+                return errorReturn(jsonResponse);
+            }
+            catch{
+                return errorReturn();
+            }
+        },
+        update: async (user) => {
+            let body = JSON.stringify({
+                "nationalityId": user.nationality.id,
+                "identification": user.identification,
+                "identificationTypeId": user.identificationType.id,
+                "email": user.email,
+                "firstName": user.firstName,
+                "lastName": user.lastName,
+                "gender": user.gender,
+                'address': user.address
+            });
+            let response = await makeApiCall(Config.apiURLs.providers + '/' + user.id, "put", body);
+
+            try {
+                if (!response) {
+                    return errorReturn();
+                }
+
+                let jsonResponse = await response.json();
+                if (response.ok) {
+                    return {
+                        ok: true,
+                        result: {
+                            id: jsonResponse
+                        }
+                    };
+                }
+                return errorReturn(jsonResponse);
+            }
+            catch{
+                return errorReturn();
+            }
+        },
+        getByUsername: async (username) => {
+            let response = await makeApiCall(Config.apiURLs.providers + '/' + username, "get");
+
+            try {
+                if (!response) {
+                    return errorReturn();
+                }
+                let jsonResponse = await response.json();
+                if (response.ok) {
+                    console.log(jsonResponse);
+                    return {
+                        ok: true,
+                        result: jsonResponse
+                    };
+                }
+
                 return errorReturn(jsonResponse);
             }
             catch{
@@ -579,6 +767,32 @@ export default {
 
     },
     services: {
+        create: async (service, userid) => {
+            let body = JSON.stringify({
+                serviceTypeId: service.serviceType.id,
+                weekDays: service.weekDays,
+                userId: userid,
+            });
+
+            let response = await makeApiCall(Config.apiURLs.services, "post", body);
+            try {
+                if (!response)
+                    return errorReturn();
+
+                let jsonResponse = await response.json();
+                if (response.ok) {
+                    console.log(jsonResponse);
+                    return {
+                        ok: true
+                    };
+                }
+
+                return errorReturn();
+            }
+            catch{
+                return errorReturn();
+            }
+        },
         read: async () => {
             let response = await makeApiCall(Config.apiURLs.services, "get");
 
@@ -586,6 +800,30 @@ export default {
                 if (!response) {
                     return errorReturn();
                 }
+                
+                let jsonResponse = await response.json();
+                if (response.ok) {
+                    console.log(jsonResponse);
+                    return {
+                        ok: true,
+                        result: jsonResponse
+                    };
+                }
+
+                return errorReturn(jsonResponse);
+            }
+            catch{
+                return errorReturn();
+            }
+        },
+        getById: async (serviceId) => {
+            let response = await makeApiCall(Config.apiURLs.services + '/' + serviceId, "get");
+
+            try {
+                if (!response) {
+                    return errorReturn();
+                }
+                
                 let jsonResponse = await response.json();
                 if (response.ok) {
                     console.log(jsonResponse);

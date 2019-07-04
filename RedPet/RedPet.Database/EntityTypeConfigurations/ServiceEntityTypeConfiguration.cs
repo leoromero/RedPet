@@ -8,9 +8,11 @@ namespace RedPet.Database.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Service> builder)
         {
-            builder.HasOne(x => x.Type).WithMany();
-            builder.HasOne(x => x.PetSize).WithMany();
+            builder.HasOne(x => x.ServiceType).WithMany();
             builder.HasOne(x => x.Provider).WithMany(x => x.Services);
+            builder.HasMany(x => x.ServicePetSizes).WithOne(x => x.Service).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.ServiceSubServices).WithOne(x => x.Service).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.ServiceFrecuencies).WithOne(x => x.Service).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

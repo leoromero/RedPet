@@ -12,6 +12,8 @@ import PublicAppDrawer from "./PublicHome/AppDrawer";
 import AppDrawer from "./AppBar/AppDrawer";
 import { Grid } from "@material-ui/core";
 import ProfilePage from "./Profile/ProfilePage";
+import ServicesPage from "./Services/ServicesPage";
+import ServicePage from "./Services/ServicePage";
 
 const Router = (props) => {
   const { authenticated } = useContext(AuthContext);
@@ -45,6 +47,9 @@ const Router = (props) => {
                       <Route path="/pet/new" component={PetPage} />
                       <Route path="/pet/:id" component={PetPage} />
                       <Route path="/profile" component={ProfilePage} />
+                      <Route path="/services" component={ServicesPage} />
+                      <Route path="/service" component={ServicePage} />
+                      <Route exact path="/service/:id" component={ServicePage} />
                     </>
                   )
               }

@@ -28,10 +28,11 @@ namespace RedPet.Core.Auth
         private readonly IFacebookClient facebookClient;
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
+        private readonly RoleManager<IdentityRole<int>> roleManager;
 
         public AuthService( IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions, 
             ICustomerService customerService, IUserService userService, IFacebookClient facebookClient, 
-            SignInManager<User> signInManager, UserManager<User> userManager)
+            SignInManager<User> signInManager, UserManager<User> userManager, RoleManager<IdentityRole<int>> roleManager)
         {
             this.jwtFactory = jwtFactory;
             this.jwtOptions = jwtOptions.Value;
@@ -40,6 +41,7 @@ namespace RedPet.Core.Auth
             this.facebookClient = facebookClient;
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.roleManager = roleManager;
         }
 
         public async Task<EntityResult<JwtModel>> LoginAsync(LoginModel model)
@@ -54,9 +56,10 @@ namespace RedPet.Core.Auth
             }
 
             var user = await userManager.FindByEmailAsync(model.Username);
+            var roles = await userManager.GetRolesAsync(user);
             var refreshToken = await GenerateRefreshToken(model.Username);
 
-            result.Entity = GenerateJwt(jwtFactory.GenerateClaimsIdentity(user.UserName, user.Id, "Customer"), user.UserName, refreshToken);
+            result.Entity = GenerateJwt(jwtFactory.GenerateClaimsIdentity(user.UserName, user.Id, roles.FirstOrDefault()), user.UserName, refreshToken);
 
             return result;
         }

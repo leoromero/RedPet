@@ -10,6 +10,7 @@ import { Formik } from 'formik';
 import loginValidation from '../../validations/loginValidation';
 import Auth from '../../helpers/Auth';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { withRouter } from 'react-router-dom';
 
 
 const Login = (props) => {
@@ -27,6 +28,8 @@ const Login = (props) => {
 
     if (apiResponse.ok) {
       login(apiResponse.accessToken, apiResponse.refreshToken, apiResponse.user);
+
+      props.history.push("/");
     }
     else {
       setLoading(false);
@@ -78,4 +81,4 @@ const Login = (props) => {
     </Card >
   )
 }
-export default Login;
+export default withRouter(Login);
