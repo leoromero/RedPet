@@ -772,6 +772,10 @@ export default {
                 serviceTypeId: service.serviceType.id,
                 weekDays: service.weekDays,
                 userId: userid,
+                price: service.price,
+                frecuencies: service.frecuencies,
+                petSizes: service.petSizes,
+                serviceSubTypes: service.subServices,
             });
 
             let response = await makeApiCall(Config.apiURLs.services, "post", body);

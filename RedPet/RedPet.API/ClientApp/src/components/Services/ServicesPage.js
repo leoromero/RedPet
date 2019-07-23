@@ -44,7 +44,7 @@ const ServicesPage = (props) => {
   }, []);
 
   const handleAdd = () => {
-    props.history.push('/service/new');
+    props.history.push('/service');
   };
 
   function handleChange(event, newValue) {

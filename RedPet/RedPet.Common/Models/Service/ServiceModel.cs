@@ -14,7 +14,7 @@ namespace RedPet.Common.Models.Service
         public int ProviderId { get; set; }
         public int WeekDaysId { get; set; }
         public string Name { get; set; }
-        public decimal DailyPrice { get; set; }
+        public decimal Price { get; set; }
         public ProviderModel Provider { get; set; }
         public WeekDaysModel WeekDays { get; set; }
         public ServiceTypeModel ServiceType { get; set; }
@@ -32,8 +32,8 @@ namespace RedPet.Common.Models.Service
         public int UserId { get; set; }
 
         public WeekDaysModel WeekDays { get; set; }
-        public IList<int> Frecuencies { get; set; }
-        public IList<int> PetSizes { get; set; }
-        public IList<int> ServiceSubTypes { get; set; }
+        public IList<FrecuencyModel> Frecuencies { get; set; }
+        public IList<PetSizeModel> PetSizes { get; set; }
+        public IList<SubServiceModel> ServiceSubTypes { get; set; }
     }
 }

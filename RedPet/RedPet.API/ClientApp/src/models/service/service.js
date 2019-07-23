@@ -8,7 +8,10 @@ export const WeekDaysModel = {
     saturday: false,
     sunday: false,
 };
-export const FrecuencyModel = {};
+export const FrecuencyModel = {
+    name:'',
+    id:''
+};
 export const ServiceTypeModel = {
     name: '',
     id: ''
@@ -18,7 +21,7 @@ export const ServiceModel = {
     serviceType: ServiceTypeModel,
     weekDays: WeekDaysModel,
     frecuencies: [],
-    dailyPrice: 0,
+    price: 0,
     petSizes: [],
     subServices: []
 };

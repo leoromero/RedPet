@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RedPet.Database;
 
 namespace RedPet.Database.Migrations
 {
     [DbContext(typeof(RedPetContext))]
-    partial class RedPetContextModelSnapshot : ModelSnapshot
+    [Migration("20190723023150_changed-table-names")]
+    partial class changedtablenames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -8,6 +8,7 @@ namespace RedPet.Database.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<ServicePetSize> builder)
         {
+            builder.ToTable("ServicePetSizes");
             builder.HasOne(x => x.PetSize).WithMany();
             builder.HasOne(x => x.Service).WithMany(x=>x.ServicePetSizes);
         }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RedPet.Database;
 
 namespace RedPet.Database.Migrations
 {
     [DbContext(typeof(RedPetContext))]
-    partial class RedPetContextModelSnapshot : ModelSnapshot
+    [Migration("20190723015442_changedColumnName")]
+    partial class changedColumnName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -635,7 +637,9 @@ namespace RedPet.Database.Migrations
 
                     b.Property<DateTime?>("InactivationDate");
 
-                    b.Property<int>("ServiceId");
+                    b.Property<int?>("ServiceId");
+
+                    b.Property<int>("ServicePriceId");
 
                     b.HasKey("Id");
 
@@ -643,7 +647,7 @@ namespace RedPet.Database.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ServiceFrecuencies");
+                    b.ToTable("ServiceFrecuency");
                 });
 
             modelBuilder.Entity("RedPet.Database.Entities.ServicePetSize", b =>
@@ -658,7 +662,9 @@ namespace RedPet.Database.Migrations
 
                     b.Property<int>("PetSizeId");
 
-                    b.Property<int>("ServiceId");
+                    b.Property<int?>("ServiceId");
+
+                    b.Property<int>("ServicePriceId");
 
                     b.HasKey("Id");
 
@@ -666,7 +672,7 @@ namespace RedPet.Database.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ServicePetSizes");
+                    b.ToTable("ServicePricePetSizes");
                 });
 
             modelBuilder.Entity("RedPet.Database.Entities.ServiceSubService", b =>
@@ -689,7 +695,7 @@ namespace RedPet.Database.Migrations
 
                     b.HasIndex("ServiceSubTypeId");
 
-                    b.ToTable("ServiceSubServices");
+                    b.ToTable("ServicePriceServiceSubTypes");
                 });
 
             modelBuilder.Entity("RedPet.Database.Entities.ServiceType", b =>

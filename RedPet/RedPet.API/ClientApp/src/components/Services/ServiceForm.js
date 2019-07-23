@@ -33,7 +33,7 @@ const ServiceForm = (props) => {
   }
 
   const changePrice = price => {
-    setFieldValue('dailyPrice', price);
+    setFieldValue('price', price);
   }
 
   const pricesSection =
@@ -67,19 +67,19 @@ const ServiceForm = (props) => {
             row={true}
             labelPlacement="bottom" />}
         />
-        <FrecuencyRadioButtons
+        {/* <FrecuencyRadioButtons
           name="frecuency.id"
           title="¿A servicios de que frecuencia aplica el precio?"
           value={values.frecuency.id}
           onChange={change('frecuency')}
           row={true}
-          labelPlacement="bottom" />
+          labelPlacement="bottom" /> */}
       </Grid>
       <Grid item xs={12} container justify='center' className={classes.row}>
         <PricesInputs
           onChange={changePrice}
-          value={values.dailyPrice}
-          name="dailyPrice"
+          value={values.price}
+          name="price"
           title="¿Que precio tiene el servicio?"
           row={true}
           labelPlacement="bottom" />
@@ -89,8 +89,8 @@ const ServiceForm = (props) => {
     <form onSubmit={handleSubmit} id='serviceForm'>
       <Grid container>
         <Grid item xs={12} container justify='center' direction="column" alignItems="center" className={classes.row}>
-          <Typography variant="h5" >Empecemos con el serivicio que quieres agregar.</Typography>
-          <Typography variant="body2" align="center">Puedes tener todos los servicios que quieras!</Typography>
+          <Typography variant="h5" >Empecemos con el servicio que quieres agregar.</Typography>
+          <Typography variant="body2" align="center">Puedes proveer todos los servicios que quieras!</Typography>
         </Grid>
         <Grid item xs={12} container justify='center' className={classes.row}>
           <ServiceTypeSelect

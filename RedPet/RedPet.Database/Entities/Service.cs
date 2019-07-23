@@ -8,7 +8,7 @@ namespace RedPet.Database.Entities
         public int ProviderId { get; set; }
         public int WeekDaysId { get; set; }
         public string Name { get; set; }
-        public decimal DailyPrice { get; set; }
+        public decimal Price { get; set; }
         
         public virtual ServiceType ServiceType { get; set; }
         public virtual Provider Provider { get; set; }        
