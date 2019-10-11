@@ -48,8 +48,8 @@ const Router = (props) => {
                       <Route path="/pet/:id" component={PetPage} />
                       <Route path="/profile" component={ProfilePage} />
                       <Route path="/services" component={ServicesPage} />
-                      <Route path="/service" component={ServicePage} />
-                      <Route exact path="/service/:id" component={ServicePage} />
+                      <Route exact path="/service" component={ServicePage} />
+                      <Route path="/service/:id" component={ServicePage} />
                     </>
                   )
               }

@@ -7,6 +7,7 @@ using RedPet.Common.Models.Service;
 using RedPet.Common.Models.Base;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using RedPet.Common.Models.ServiceSearch;
 
 namespace RedPet.Core
 {
@@ -32,6 +33,13 @@ namespace RedPet.Core
             result.Entity = service.Id;
 
             return result;
+        }
+
+        public async Task<EntityResult<ServiceSearchResultModel>> SearchServicesAsync(ServiceSearchModel parameters)
+        {
+            var result = new EntityResult<ServiceSearchResultModel>();
+
+            var services = await Repository.SearchAsync(parameters);
         }
     }
 

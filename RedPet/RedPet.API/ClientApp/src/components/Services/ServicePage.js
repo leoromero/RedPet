@@ -16,7 +16,7 @@ const ServicePage = (props) => {
   const [service, setService] = useState(undefined);
   const showMessage = useContext(MessageContext);
   const {user} = useContext(AuthContext);
-
+  const isEdit = service != undefined;
 
   useEffect(() => {
     const serviceId = props.match.params.id;
@@ -35,10 +35,14 @@ const ServicePage = (props) => {
 
   const submitForm = async service => {
 
-    const apiResponse = await useApi(Api.services.create(service, user.id), showMessage);
+    let apiResponse;
+    if(isEdit) 
+      apiResponse = await useApi(Api.services.update(service))
+    else
+        apiResponse = await useApi(Api.services.create(service, user.id), showMessage);
 
     if (apiResponse.ok) {
-      showMessage("Servicio creado con exito", "success");
+      showMessage("Servicio guardado con exito", "success");
     }
   }
 
@@ -48,7 +52,7 @@ const ServicePage = (props) => {
         <Card >
           <CardHeader
             titleTypographyProps={{ align: "center" }}
-            title={'Nuevo servicio'}
+            title={isEdit? 'Editar servicio':'Nuevo servicio'}
             titleTypographyProps={{color:"secondary", align:"center"}}
           />
           <CardContent>
@@ -67,7 +71,7 @@ const ServicePage = (props) => {
               <Button color='default' variant='contained'>Cancelar</Button>
             </Grid>
             <Grid item>
-              <Button type='submit' form="serviceForm" color='secondary' variant='contained'>Crear Servicio</Button>
+              <Button type='submit' form="serviceForm" color='secondary' variant='contained'>{isEdit? 'Editar' : 'Crear Servicio'}</Button>
             </Grid>
           </Grid>
         </Grid>

@@ -1,12 +1,15 @@
 import React from 'react';
 import { DatePicker } from "@material-ui/pickers";
+import { datePickerDefaultProps } from '@material-ui/pickers/constants/prop-types';
 
 export const FormikDatePicker = ({
   form,
   field: { value, name },
-  label
+  label,
+  disableFuture,
+  ...props
 }) => {
-  // console.log(rest);
+
   return (
     <>
       <DatePicker 
@@ -27,11 +30,11 @@ export const FormikDatePicker = ({
           form.setFieldTouched(name);
           form.setFieldValue(name, value);
         }}
-        disableFuture
+        disableFuture= {disableFuture !== undefined ? disableFuture : true}
         disableOpenOnEnter
         animateYearScrolling={false}
         error={Boolean(form.touched[name] && form.errors[name])}
-        helperText={form.touched[name] ? 'Introduzca una fecha valida.' : ''}
+        helperText={Boolean(form.touched[name] && form.errors[name]) ? 'Introduzca una fecha valida.' : ''}
       />
     </>
   );

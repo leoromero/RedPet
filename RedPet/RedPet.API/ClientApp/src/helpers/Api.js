@@ -797,6 +797,36 @@ export default {
                 return errorReturn();
             }
         },
+        update: async (service) => {
+            let body = JSON.stringify({
+                serviceTypeId: service.serviceType.id,
+                weekDays: service.weekDays,
+                userId: service.userid,
+                price: service.price,
+                frecuencies: service.frecuencies,
+                petSizes: service.petSizes,
+                serviceSubTypes: service.subServices,
+            });
+
+            let response = await makeApiCall(Config.apiURLs.services + '/' + service.id, "put", body);
+            try {
+                if (!response)
+                    return errorReturn();
+
+                let jsonResponse = await response.json();
+                if (response.ok) {
+                    console.log(jsonResponse);
+                    return {
+                        ok: true
+                    };
+                }
+
+                return errorReturn();
+            }
+            catch{
+                return errorReturn();
+            }
+        },
         read: async () => {
             let response = await makeApiCall(Config.apiURLs.services, "get");
 

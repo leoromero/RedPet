@@ -10,8 +10,8 @@ import { MessageContext } from '../../contexts/MessageContext';
 import useApi from '../../Hooks/useApi';
 import Api from '../../helpers/Api';
 import { isNullOrUndefined } from 'util';
-import ServiceCard from './ServiceCard';
 import { DayCareIcon } from '../icons/DayCareIcon';
+import ServicesTable from './ServicesTable';
 
 const ServicesPage = (props) => {
   const classes = styles();
@@ -53,8 +53,8 @@ const ServicesPage = (props) => {
 
   if (services === undefined) return null;
 
-  const servicesInType = services.filter(x => x.serviceType === tabValue);
-
+  const servicesInType = services.filter(x => x.serviceTypeId === tabValue);
+debugger;
   return (
     <Grid container direction="column" className={classes.page} >
       <div className={classes.toolbar}>
@@ -73,11 +73,7 @@ const ServicesPage = (props) => {
       </div>
       {
         servicesInType.length > 0 ?
-          servicesInType.map((service) =>
-            <Grid item xs={12} md={6} lg={4}>
-              <ServiceCard id={service.id} serviceType={service.serviceType} serviceIcon={<DayCareIcon />} />
-            </Grid>
-          ) :
+          <ServicesTable services={servicesInType}></ServicesTable> :
           <Typography variant='subtitle1'>Todavía no te has registrado para trabajar con {serviceTypes && serviceTypes.filter(x => x.id == tabValue)[0].name.toLowerCase()}.</Typography>
       }
       <Fab color="secondary" aria-label="Add" className={classes.fab} onClick={handleAdd}>

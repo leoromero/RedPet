@@ -7,6 +7,7 @@ import useApi from '../../Hooks/useApi';
 import { MessageContext } from '../../contexts/MessageContext';
 import useOpen from '../../Hooks/useOpen';
 import NoPetsDialog from './NoPetsDialog';
+import ServiceSearchPaper from '../Search/ServiceSearchPaper';
 
 const HomePage = (props) => {
   const classes = styles();
@@ -34,6 +35,7 @@ const HomePage = (props) => {
     <Grid container className={classes.page}>
       <Grid item xs={12} md={12}>
         <NoPetsDialog isOpen={showNoPetsModal} toggle={toggleShowNoPetsModal} />
+        <ServiceSearchPaper />
       </Grid>
     </Grid>
   );

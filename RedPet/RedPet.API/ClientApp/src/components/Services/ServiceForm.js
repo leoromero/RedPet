@@ -67,18 +67,12 @@ const ServiceForm = (props) => {
             row={true}
             labelPlacement="bottom" />}
         />
-        {/* <FrecuencyRadioButtons
-          name="frecuency.id"
-          title="¿A servicios de que frecuencia aplica el precio?"
-          value={values.frecuency.id}
-          onChange={change('frecuency')}
-          row={true}
-          labelPlacement="bottom" /> */}
       </Grid>
       <Grid item xs={12} container justify='center' className={classes.row}>
         <PricesInputs
           onChange={changePrice}
           value={values.price}
+          frecuencies={values.frecuencies}
           name="price"
           title="¿Que precio tiene el servicio?"
           row={true}

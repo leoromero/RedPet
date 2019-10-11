@@ -7,7 +7,6 @@ namespace RedPet.Common.Models.Provider
     public class ProviderModel : IViewModel
     {
         public int Id { get; set; }
-        public IList<ServiceModel> Services { get; set; }
         public string Gender { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -19,7 +19,14 @@ namespace RedPet.API.Infrastructure.Automapper
                 .ForMember(dest => dest.ServiceFrecuencies, opts => opts.MapFrom(src => src.Frecuencies.Select(f => new ServiceFrecuency { FrecuencyId = f.Id, CreatedDate = DateTime.Now })))
                 .ForMember(dest => dest.ServicePetSizes, opts => opts.MapFrom(src => src.PetSizes.Select(ps => new ServicePetSize { PetSizeId = ps.Id.Value, CreatedDate = DateTime.Now })))
                 .ForMember(dest => dest.ServiceSubServices, opts => opts.MapFrom(src => src.ServiceSubTypes.Select(s => new ServiceSubService { ServiceSubTypeId = s.Id, CreatedDate = DateTime.Now })))
-                .ForMember(dest => dest.ProviderId, opts => opts.Ignore());
+                .ForMember(dest => dest.ProviderId, opts => opts.Ignore())
+                .AfterMap((src, dest) =>
+                {
+                    foreach (var item in dest.ServicePetSizes)
+                    {
+                        item.ServiceId = dest.Id;
+                    }
+                });
         }
     }
 }

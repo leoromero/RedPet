@@ -23,7 +23,8 @@ export const ServiceModel = {
     frecuencies: [],
     price: 0,
     petSizes: [],
-    subServices: []
+    subServices: [],
+    userId: 0
 };
 
 export default { ServiceModel, ServiceTypeModel, WeekDaysModel, FrecuencyModel }
